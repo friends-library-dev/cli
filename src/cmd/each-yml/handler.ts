@@ -19,7 +19,7 @@ function getYmls(): { friend: Friend; path: string; raw: string; repoPath: strin
       friend,
       path,
       raw: fs.readFileSync(path).toString(),
-      repoPath: `${DOCS_REPOS_ROOT}${friend.path}`,
+      repoPath: `${DOCS_REPOS_ROOT}/${friend.path}`,
     };
   });
 }
