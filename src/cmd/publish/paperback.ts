@@ -3,14 +3,9 @@ import parsePdf from 'pdf-parse';
 import { choosePrintSize } from '@friends-library/lulu';
 import { log, c, red } from 'x-chalk';
 import * as artifacts from '@friends-library/doc-artifacts';
-import {
-  PageData,
-  PrintSizeVariant,
-  EditionMeta,
-  PrintSize,
-  PRINT_SIZE_VARIANTS,
-} from '@friends-library/types';
+import { PrintSizeVariant, PrintSize, PRINT_SIZE_VARIANTS } from '@friends-library/types';
 import { paperbackInterior as paperbackManifest } from '@friends-library/doc-manifests';
+import { PageData, EditionMeta } from '@friends-library/document-meta';
 import { FsDocPrecursor } from '@friends-library/dpc-fs';
 
 type SinglePages = PageData['single'];

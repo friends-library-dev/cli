@@ -2,5 +2,6 @@ node_modules/
 jest.config.js
 dist/
 src/cmd/audio/.soundcloud-token
+src/cmd/audio/derived/
 src/cmd/isbns/isbns.csv
 .DS_Store

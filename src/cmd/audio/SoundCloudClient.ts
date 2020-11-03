@@ -1,29 +1,16 @@
 import fs from 'fs';
 import path from 'path';
+import omit from 'lodash.omit';
 import fetch, { Response } from 'node-fetch';
 import querystring from 'querystring';
 import FormData from 'form-data';
+import { SoundCloudTrackAttrs, SoundCloudPlaylistAttrs } from './types';
 
 interface Config {
   username: string;
   password: string;
   clientId: string;
   clientSecret: string;
-}
-
-interface Track {
-  title: string;
-  description: string;
-  audioPath: string;
-  imagePath: string;
-  tags: string[];
-}
-
-interface Playlist {
-  title: string;
-  description: string;
-  tracks: number[];
-  tags: string[];
 }
 
 export default class SoundCloudClient {
@@ -38,24 +25,35 @@ export default class SoundCloudClient {
       return null;
     }
     if (res.status >= 300) {
-      throw new Error(`Error getting track: ${trackId}`);
+      throw new Error(`Error getting track: ${trackId}. ${res.status}/${res.statusText}`);
     }
     return await res.json();
   }
 
-  public async setPlaylistTracks(
-    playlistId: number,
-    trackIds: number[],
-  ): Promise<boolean> {
-    const body = {
-      playlist: {
-        tracks: trackIds.map((id) => ({ id })),
-      },
-    };
+  public async getPlaylist(playlistId: number): Promise<null | Record<string, any>> {
+    if (!this.token) await this.getToken();
+    const res = await fetch(
+      this.endpoint(`playlists/${playlistId}?oauth_token=${this.token}`),
+    );
+    if (res.status === 404) {
+      return null;
+    }
+    if (res.status >= 300) {
+      throw new Error(
+        `Error getting track: ${playlistId}. ${res.status}/${res.statusText}`,
+      );
+    }
+    return await res.json();
+  }
 
+  public async setPlaylistAttrs(
+    playlistId: number,
+    playlist: SoundCloudPlaylistAttrs,
+  ): Promise<boolean> {
+    const body = { playlist: this.playlistData(playlist) };
     const res = await this.sendJson(`playlists/${playlistId}`, body, `PUT`);
     if (res.status >= 300) {
-      throw new Error(`Error setting playlist tracks`);
+      throw new Error(`Error setting playlist attrs. ${res.status}/${res.statusText}`);
     }
     return true;
   }
@@ -73,7 +71,7 @@ export default class SoundCloudClient {
     });
 
     if (res.status >= 300) {
-      throw new Error(`Error setting track artwork`);
+      throw new Error(`Error setting track artwork. ${res.status}/${res.statusText}`);
     }
     return true;
   }
@@ -94,27 +92,28 @@ export default class SoundCloudClient {
     });
 
     if (res.status >= 300) {
-      throw new Error(`Error setting playlist artwork`);
+      throw new Error(`Error setting playlist artwork. ${res.status}/${res.statusText}`);
     }
     return true;
   }
 
-  public async createPlaylist(playlist: Playlist): Promise<number> {
+  private playlistData(playlist: SoundCloudPlaylistAttrs): Record<string, any> {
+    return {
+      tracks: playlist.trackIds.map((id) => ({ id })),
+      tag_list: playlist.tags.join(` `),
+      ...omit(playlist, [`tags`, `trackIds`]),
+    };
+  }
+
+  public async createPlaylist(playlist: SoundCloudPlaylistAttrs): Promise<number> {
     const res = await this.sendJson(`playlists`, {
-      playlist: {
-        title: playlist.title,
-        tracks: playlist.tracks.map((id) => ({ id })),
-        tag_list: playlist.tags.join(` `),
-        description: playlist.description,
-        label_name: `Friends Library Publishing`,
-        genre: `sermon`,
-        sharing: `public`,
-        embeddable_by: `all`,
-      },
+      playlist: this.playlistData(playlist),
     });
 
     if (res.status >= 300) {
-      throw new Error(`Error creating soundcloud playlist`);
+      throw new Error(
+        `Error creating soundcloud playlist. ${res.status}/${res.statusText}`,
+      );
     }
     const json = await res.json();
     return json.id;
@@ -122,13 +121,13 @@ export default class SoundCloudClient {
 
   public async updateTrackAttrs(
     trackId: number,
-    attrs: Record<string, string | boolean>,
+    attrs: Record<string, string | boolean | null | undefined>,
   ): Promise<Record<string, any>> {
     if (!this.token) await this.getToken();
 
     const res = await this.sendJson(`tracks/${trackId}`, { track: attrs }, `PUT`);
     if (res.status >= 300) {
-      throw new Error(`Error updating track attributes`);
+      throw new Error(`Error updating track attributes. ${res.status}/${res.statusText}`);
     }
     return await res.json();
   }
@@ -146,31 +145,37 @@ export default class SoundCloudClient {
     });
 
     if (res.status >= 300) {
-      throw new Error(`Error replacing soundcloud track`);
+      throw new Error(
+        `Error replacing soundcloud track. ${res.status}/${res.statusText}`,
+      );
     }
 
     return true;
   }
 
-  public async uploadTrack(track: Track): Promise<number> {
+  public async uploadTrack(
+    audioPath: string,
+    imagePath: string,
+    attrs: SoundCloudTrackAttrs,
+  ): Promise<number> {
     if (!this.token) await this.getToken();
 
     const fd = new FormData();
     fd.append(`oauth_token`, this.token);
-    fd.append(`track[title]`, track.title);
-    fd.append(`track[asset_data]`, fs.createReadStream(track.audioPath));
-    fd.append(`track[artwork_data]`, fs.createReadStream(track.imagePath));
-    fd.append(`track[original_filename]`, path.basename(track.audioPath));
-    fd.append(`track[sharing]`, `public`);
-    fd.append(`track[embeddable_by]`, `all`);
-    fd.append(`track[track_type]`, `spoken`);
-    fd.append(`track[label_name]`, `Friends Library Publishing`);
-    fd.append(`track[genre]`, `sermon`);
-    fd.append(`track[commentable]`, `false`);
-    fd.append(`track[description]`, track.description);
-    fd.append(`track[downloadable]`, `true`);
-    if (track.tags.length) {
-      fd.append(`track[tag_list]`, track.tags.join(` `));
+    fd.append(`track[title]`, attrs.title);
+    fd.append(`track[asset_data]`, fs.createReadStream(audioPath));
+    fd.append(`track[artwork_data]`, fs.createReadStream(imagePath));
+    fd.append(`track[original_filename]`, path.basename(audioPath));
+    fd.append(`track[sharing]`, attrs.sharing);
+    fd.append(`track[embeddable_by]`, attrs.embeddable_by);
+    fd.append(`track[track_type]`, attrs.track_type);
+    fd.append(`track[label_name]`, attrs.label_name);
+    fd.append(`track[genre]`, attrs.genre);
+    fd.append(`track[commentable]`, String(attrs.commentable));
+    fd.append(`track[description]`, attrs.description);
+    fd.append(`track[downloadable]`, String(attrs.downloadable));
+    if (attrs.tags.length) {
+      fd.append(`track[tag_list]`, attrs.tags.join(` `));
     }
 
     const res = await fetch(this.endpoint(`tracks`), {
@@ -179,7 +184,9 @@ export default class SoundCloudClient {
     });
 
     if (res.status >= 300) {
-      throw new Error(`Error uploading soundcloud track`);
+      throw new Error(
+        `Error uploading soundcloud track. ${res.status}/${res.statusText}`,
+      );
     }
     const json = await res.json();
     return json.id;
@@ -222,7 +229,9 @@ export default class SoundCloudClient {
     });
 
     if (res.status >= 300) {
-      throw new Error(`Error acquiring soundcloud access token`);
+      throw new Error(
+        `Error acquiring soundcloud access token. ${res.status}/${res.statusText}`,
+      );
     }
     const json = await res.json();
     this.token = json.access_token;

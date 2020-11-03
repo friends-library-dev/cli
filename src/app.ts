@@ -18,7 +18,7 @@ import * as publishRef from './cmd/make-ref';
 import * as docx from './cmd/docx';
 import * as verifyAssets from './cmd/verify-assets';
 
-/* eslint-disable  @typescript-eslint/no-unused-expressions */
+/* eslint-disable no-unused-expressions */
 yargs
   .scriptName(`fl`)
   .command(make)
