@@ -6,7 +6,7 @@ import { Audio } from '@friends-library/friends';
 import { AudioQuality } from '@friends-library/types';
 import { AudioFsData } from './types';
 import { utf8ShortTitle } from '@friends-library/adoc-convert';
-import * as ffmpeg from './ffmpeg';
+import * as ffmpeg from '../../ffmpeg';
 import { suffixThe } from './tags';
 
 export function create(audio: Audio, src: AudioFsData, quality: AudioQuality): void {

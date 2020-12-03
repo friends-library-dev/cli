@@ -4,4 +4,5 @@ dist/
 src/cmd/audio/.soundcloud-token
 src/cmd/audio/derived/
 src/cmd/isbns/isbns.csv
+src/cmd/video/auth.json
 .DS_Store

@@ -1,25 +1,25 @@
 import fs from 'fs-extra';
 import { basename, dirname } from 'path';
+import { sync as glob } from 'glob';
 import exec from 'x-exec';
 import md5File from 'md5-file';
 import * as cloud from '@friends-library/cloud';
 import { c, log } from 'x-chalk';
-import { isDefined } from 'x-ts-utils';
-import { getAllFriends, Audio, Friend } from '@friends-library/friends';
+import { Audio } from '@friends-library/friends';
 import * as docMeta from '@friends-library/document-meta';
-import { AudioQuality, AUDIO_QUALITIES } from '@friends-library/types';
+import { AudioQuality, AUDIO_QUALITIES, Lang } from '@friends-library/types';
 import { AudioFsData } from './types';
-import { logDebug, logAction, logError } from './utils';
+import { logDebug, logAction, logError } from '../../sub-log';
+import { getAudios } from '../../audio';
+import * as yml from '../../yml-writer';
+import * as ffmpeg from '../../ffmpeg';
 import * as cache from './cache';
-import * as ffmpeg from './ffmpeg';
 import * as m4bTool from './m4b';
 import * as soundcloud from './soundcloud';
 import getSrcFsData from './audio-fs-data';
-import * as yml from '../../yml-writer';
-import { sync as glob } from 'glob';
 
 interface Argv {
-  lang: 'en' | 'es' | 'both';
+  lang: Lang | 'both';
   limit: number;
   dryRun: boolean;
   skipLargeUploads: boolean;
@@ -39,7 +39,7 @@ export default async function handler(passedArgv: Argv): Promise<void> {
   argv = passedArgv;
   ffmpeg.ensureExists();
   m4bTool.ensureExists();
-  for (const audio of getAudios()) {
+  for (const audio of getAudios(argv.lang, argv.limit, argv.pattern)) {
     await handleAudio(audio);
   }
   log(``);
@@ -459,26 +459,6 @@ async function cleanCacheFiles(fsData: AudioFsData): Promise<void> {
   const keepList = [fsData.cachedDataPath, ...fsData.parts.map((p) => p.cachedDataPath)];
   const cacheFiles = glob(`${dirname(fsData.cachedDataPath)}/**/*.json`);
   cacheFiles.filter((f) => !keepList.includes(f)).forEach((f) => fs.unlinkSync(f));
-}
-
-function getAudios(): Audio[] {
-  let friends: Friend[] = [];
-  if (argv.lang === `both` || argv.lang === `en`) {
-    friends = friends.concat(getAllFriends(`en`, true));
-  }
-  if (argv.lang === `both` || argv.lang === `es`) {
-    friends = friends.concat(getAllFriends(`es`, true));
-  }
-
-  return friends
-    .filter((friend) => friend.documents.some((doc) => doc.hasAudio))
-    .flatMap((friend) => friend.documents)
-    .flatMap((document) => document.editions)
-    .filter((edition) => !edition.isDraft)
-    .filter((edition) => !argv.pattern || edition.path.includes(argv.pattern))
-    .map((edition) => edition.audio)
-    .filter(isDefined)
-    .slice(0, argv.limit);
 }
 
 function ensureCache<T>(cached: T): NonNullable<T> {

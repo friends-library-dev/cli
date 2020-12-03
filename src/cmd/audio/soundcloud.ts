@@ -5,10 +5,10 @@ import { Audio } from '@friends-library/friends';
 import { AudioQuality, Lang } from '@friends-library/types';
 import { translate, setLocale } from '@friends-library/locale';
 import { utf8ShortTitle } from '@friends-library/adoc-convert';
+import { logDebug } from '../../sub-log';
 import Client from './SoundCloudClient';
 import { getPartTitle } from './tags';
 import { SoundCloudTrackAttrs, SoundCloudPlaylistAttrs } from './types';
-import { logDebug } from './utils';
 
 export function getTrack(trackId: number): Promise<null | Record<string, any>> {
   return getClient().getTrack(trackId);

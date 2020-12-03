@@ -11,6 +11,7 @@ import * as convert from './cmd/convert';
 import * as chapterize from './cmd/chapterize';
 import * as isbns from './cmd/isbns';
 import * as audio from './cmd/audio';
+import * as video from './cmd/video';
 import * as eachYml from './cmd/each-yml';
 import * as eachAdoc from './cmd/each-adoc';
 import * as publishRef from './cmd/make-ref';
@@ -30,6 +31,7 @@ yargs
   .command(chapterize)
   .command(convert)
   .command(audio)
+  .command(video)
   .command(eachYml)
   .command(docx)
   .command(eachAdoc)

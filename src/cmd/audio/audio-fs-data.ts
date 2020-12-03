@@ -3,8 +3,9 @@ import fs from 'fs-extra';
 import md5File from 'md5-file';
 import env from '@friends-library/env';
 import { Audio } from '@friends-library/friends';
+import { logError } from '../../sub-log';
 import { AudioFsData } from './types';
-import { logError, md5String } from './utils';
+import { md5String } from './utils';
 
 export default async function getSrcFsData(audio: Audio): Promise<AudioFsData> {
   const { AUDIOS_PATH } = env.require(`AUDIOS_PATH`);

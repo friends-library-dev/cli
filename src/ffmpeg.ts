@@ -1,9 +1,46 @@
+import fs from 'fs-extra';
 import { dirname, basename } from 'path';
 import { red } from 'x-chalk';
 import exec from 'x-exec';
 import { Audio } from '@friends-library/friends';
 import { AudioQuality } from '@friends-library/types';
-import { getPartTags } from './tags';
+import { getPartTags } from './cmd/audio/tags';
+
+export function makeVideo(
+  workDir: string,
+  wavFilename: string,
+  outputFilename: string,
+): void {
+  const args = [
+    `-y`, // overwrite existing output file
+    `-f concat -i slides.txt`, // concat still photos from instruction file
+    `-i ${wavFilename}`, // add wav file source
+    `-vsync vfr`, // no clue
+    `-pix_fmt yuv420p`, // output format?
+    outputFilename,
+  ];
+  ffmpeg(args, workDir);
+}
+
+export function joinWavs(
+  workDir: string,
+  wavSrcPaths: string[],
+  outputFilename: string,
+): string {
+  wavSrcPaths.forEach((path) => exec.exit(`cp ${path} ${workDir}/`));
+  const fileLines = wavSrcPaths.map((path) => `file '${basename(path)}'`);
+  fs.writeFileSync(`${workDir}/join-wavs.txt`, fileLines.join(`\n`));
+  const ffmpegArgs = [
+    `-y`, // overwrite existing output file
+    `-f concat -i join-wavs.txt`, // concat wav files from instruction file
+    `-c copy`,
+    outputFilename,
+  ];
+  ffmpeg(ffmpegArgs, workDir);
+  fs.unlinkSync(`${workDir}/join-wavs.txt`);
+  wavSrcPaths.map((path) => fs.unlinkSync(`${workDir}/${basename(path)}`));
+  return `${workDir}/${outputFilename}`;
+}
 
 export function createMp3(
   audio: Audio,
