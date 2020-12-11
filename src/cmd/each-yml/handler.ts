@@ -1,5 +1,6 @@
 import fs from 'fs';
-import { allFriends, Friend } from '@friends-library/friends';
+import { Friend } from '@friends-library/friends';
+import { allFriends } from '@friends-library/friends/query';
 import env from '@friends-library/env';
 
 export default async function handler(): Promise<void> {

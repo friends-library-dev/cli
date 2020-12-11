@@ -1,4 +1,4 @@
-import { getFriend } from '@friends-library/friends';
+import { getFriend } from '@friends-library/friends/query';
 import { getPartTags } from '../tags';
 
 const turfordEn = getFriend(`hugh-turford`, `en`).documents[0].editions[0].audio!;

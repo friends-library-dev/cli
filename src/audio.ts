@@ -1,5 +1,6 @@
 import { isDefined } from 'x-ts-utils';
-import { allPublishedAudiobooks, Edition, Audio } from '@friends-library/friends';
+import { Edition, Audio } from '@friends-library/friends';
+import { allPublishedAudiobooks } from '@friends-library/friends/query';
 import { Lang } from '@friends-library/types';
 
 export function getAudios(lang: Lang | 'both', limit: number, pattern?: string): Audio[] {
