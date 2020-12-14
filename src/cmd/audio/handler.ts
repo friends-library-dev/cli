@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import { basename, dirname } from 'path';
+import { dirname } from 'path';
 import { sync as glob } from 'glob';
 import exec from 'x-exec';
 import md5File from 'md5-file';
@@ -92,7 +92,7 @@ async function deriveUncachedMp3s(audio: Audio, fsData: AudioFsData): Promise<vo
         logAction(`storing cache data mp3 for ${c`{cyan ${partDesc}}`}`);
         !argv.dryRun && (await cache.setPartQuality(fsData, idx, quality));
       } else if (!cached[quality]) {
-        !argv.dryRun && ensureLocalMp3(audio, fsData, idx, quality);
+        !argv.dryRun && (await ensureLocalMp3(audio, fsData, idx, quality));
         !argv.dryRun && (await cache.setPartQuality(fsData, idx, quality));
       } else {
         logDebug(`found valid cached fs data for mp3 ${partDesc}`);
@@ -112,7 +112,7 @@ async function syncMp3s(audio: Audio, fsData: AudioFsData): Promise<void> {
       if (localHash !== remoteHash) {
         logAction(`uploading changed mp3 for ${c`{cyan ${partDesc}}`}`);
         if (!argv.dryRun) {
-          ensureLocalMp3(audio, fsData, idx, quality);
+          await ensureLocalMp3(audio, fsData, idx, quality);
           await cloud.uploadFile(mp3Info.localPath, mp3Info.cloudPath);
         }
       } else {
@@ -131,7 +131,7 @@ async function syncMp3Zips(audio: Audio, fsData: AudioFsData): Promise<void> {
       logAction(`storing cache data for mp3 zip ${c`{cyan (${quality})}`}`);
       !argv.dryRun && (await cache.setMp3ZipQuality(fsData, quality));
     } else if (!hasCache) {
-      !argv.dryRun && ensureLocalMp3Zip(audio, fsData, quality);
+      !argv.dryRun && (await ensureLocalMp3Zip(audio, fsData, quality));
       !argv.dryRun && (await cache.setMp3ZipQuality(fsData, quality));
     } else {
       logDebug(`found valid cached fs data for mp3 zip (${quality})`);
@@ -147,7 +147,7 @@ async function syncMp3Zips(audio: Audio, fsData: AudioFsData): Promise<void> {
     const cloudZipHash = await cloud.md5File(cloudFilepath);
     if (localZipHash !== cloudZipHash) {
       logAction(`uploading new mp3 zip ${c`{cyan (${quality})}`} to cloud storage`);
-      !argv.dryRun && ensureLocalMp3Zip(audio, fsData, quality);
+      !argv.dryRun && (await ensureLocalMp3Zip(audio, fsData, quality));
       if (!argv.skipLargeUploads) {
         !argv.dryRun && (await cloud.uploadFile(localZipPath, cloudFilepath));
       } else {
@@ -210,7 +210,7 @@ async function syncSoundCloudTracks(audio: Audio, fsData: AudioFsData): Promise<
       if (trackId === 0) {
         logAction(`uploading new soundcloud file for ${c`{cyan ${fileDesc}}`}`);
         if (!argv.dryRun) {
-          ensureLocalMp3(audio, fsData, idx, quality);
+          await ensureLocalMp3(audio, fsData, idx, quality);
           trackId = await soundcloud.uploadNewTrack(audio, localPath, idx, quality);
           logAction(`soundcloud track added for ${fileDesc} ${c`{green ${trackId}}`}`);
           updateYml(audio, (data) => {
@@ -237,7 +237,7 @@ async function syncSoundCloudTracks(audio: Audio, fsData: AudioFsData): Promise<
       if (localSize !== remoteSize) {
         logAction(`replacing soundcloud file for ${c`{cyan ${fileDesc}}`}`);
         if (!argv.dryRun) {
-          ensureLocalMp3(audio, fsData, idx, quality);
+          await ensureLocalMp3(audio, fsData, idx, quality);
           await soundcloud.replaceTrack(trackId, localPath);
         }
       } else {
@@ -389,23 +389,40 @@ function ensureLocalM4b(audio: Audio, fsData: AudioFsData, quality: AudioQuality
   !argv.dryRun && m4bTool.create(audio, fsData, quality);
 }
 
-function ensureLocalMp3Zip(audio: Audio, src: AudioFsData, quality: AudioQuality): void {
-  const localPath = src.mp3Zips[quality].localPath;
+async function ensureLocalMp3Zip(
+  audio: Audio,
+  fsData: AudioFsData,
+  quality: AudioQuality,
+): Promise<void> {
+  const localPath = fsData.mp3Zips[quality].localPath;
   if (fs.existsSync(localPath)) {
     return;
   }
-  createMp3Zip(audio, src, quality);
+  await createMp3Zip(audio, fsData, quality);
 }
 
-function createMp3Zip(audio: Audio, fsData: AudioFsData, quality: AudioQuality): void {
-  logAction(`creating mp3 zip ${c`{cyan (${quality})}`}`);
+async function createMp3Zip(
+  audio: Audio,
+  fsData: AudioFsData,
+  quality: AudioQuality,
+): Promise<void> {
+  logAction(`reating mp3 zip ${c`{cyan (${quality})}`}`);
   const zipFilename = fsData.mp3Zips[quality].localFilename;
   const mp3Filenames: string[] = [];
+  const unhashed: string[] = [];
+
   for (let idx = 0; idx < audio.parts.length; idx++) {
-    mp3Filenames.push(basename(fsData.parts[idx].mp3s[quality].localPath));
-    ensureLocalMp3(audio, fsData, idx, quality);
+    await ensureLocalMp3(audio, fsData, idx, quality);
+    const mp3Data = fsData.parts[idx].mp3s[quality];
+    const hashedPath = mp3Data.localPath;
+    const unhashedPath = hashedPath.replace(mp3Data.localFilename, mp3Data.cloudFilename);
+    unhashed.push(unhashedPath);
+    exec.exit(`cp ${hashedPath} ${unhashedPath}`);
+    mp3Filenames.push(mp3Data.cloudFilename);
   }
+
   exec.exit(`zip ${zipFilename} ${mp3Filenames.join(` `)}`, fsData.derivedPath);
+  unhashed.forEach((unhashedPath) => fs.unlinkSync(unhashedPath));
 }
 
 function updateYml(
@@ -441,17 +458,31 @@ async function createMp3(
   ffmpeg.createMp3(audio, partIndex, srcPath, destPath, quality);
 }
 
-function ensureLocalMp3(
+async function ensureLocalMp3(
   audio: Audio,
   fsData: AudioFsData,
   partIndex: number,
   quality: AudioQuality,
-): void {
+): Promise<void> {
   const mp3Path = fsData.parts[partIndex].mp3s[quality].localPath;
   if (fs.existsSync(mp3Path)) {
     return;
   }
-  logAction(`creating missing mp3 for ${c`{cyan ${`pt${partIndex + 1} (${quality})`}}`}`);
+
+  // much faster to download an MP3 than re-create, so try that first
+  const partDesc = `pt${partIndex + 1} (${quality})`;
+  const cached = cache.getPart(fsData, partIndex);
+  const mp3Info = fsData.parts[partIndex].mp3s[quality];
+  const localHash = ensureCache(cached[quality]).mp3Hash;
+  const remoteHash = await cloud.md5File(mp3Info.cloudPath);
+  if (localHash === remoteHash) {
+    logAction(`downloading missing mp3 for ${c`{cyan ${partDesc}}`}`);
+    const buff = await cloud.downloadFile(mp3Info.cloudPath);
+    fs.writeFileSync(mp3Path, buff);
+    return;
+  }
+
+  logAction(`creating missing mp3 for ${c`{cyan ${partDesc}}`}`);
   !argv.dryRun && createMp3(audio, fsData, partIndex, quality, mp3Path);
 }
 
