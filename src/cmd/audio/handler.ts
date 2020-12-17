@@ -366,7 +366,7 @@ async function storeFilesizeMeta(audio: Audio, fsData: AudioFsData): Promise<voi
   };
 
   if (JSON.stringify(localAudioMeta) === JSON.stringify(editionMeta.audio)) {
-    logDebug(`skiping store meta - up to date`);
+    logDebug(`skipping store meta - up to date`);
     return;
   }
 
@@ -472,14 +472,17 @@ async function ensureLocalMp3(
   // much faster to download an MP3 than re-create, so try that first
   const partDesc = `pt${partIndex + 1} (${quality})`;
   const cached = cache.getPart(fsData, partIndex);
-  const mp3Info = fsData.parts[partIndex].mp3s[quality];
-  const localHash = cached[quality]?.mp3Hash;
-  const remoteHash = await cloud.md5File(mp3Info.cloudPath);
-  if (localHash === remoteHash) {
-    logAction(`downloading missing mp3 for ${c`{cyan ${partDesc}}`}`);
-    const buff = await cloud.downloadFile(mp3Info.cloudPath);
-    fs.writeFileSync(mp3Path, buff);
-    return;
+  const hasCache = !!cached[quality]?.mp3Hash;
+  if (hasCache) {
+    const mp3Info = fsData.parts[partIndex].mp3s[quality];
+    const localHash = ensureCache(cached[quality]).mp3Hash;
+    const remoteHash = await cloud.md5File(mp3Info.cloudPath);
+    if (localHash === remoteHash) {
+      logAction(`downloading missing mp3 for ${c`{cyan ${partDesc}}`}`);
+      const buff = await cloud.downloadFile(mp3Info.cloudPath);
+      fs.writeFileSync(mp3Path, buff);
+      return;
+    }
   }
 
   logAction(`creating missing mp3 for ${c`{cyan ${partDesc}}`}`);
