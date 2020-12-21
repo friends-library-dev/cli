@@ -17,8 +17,8 @@ interface Argv {
   lang: Lang | 'both';
   limit: number;
   dryRun: boolean;
+  posterServerPort: number;
   pattern?: string;
-  posterServerPort?: number;
 }
 
 export default async function handler(argv: Argv): Promise<void> {
@@ -96,7 +96,7 @@ async function makeVideo(
   numVols: number,
   workDir: string,
   audioFsData: AudioFsData,
-  devServerPort?: number,
+  posterServerPort: number,
 ): Promise<void> {
   const suffix = numVols === 1 ? `` : `-v${volNum}`;
   const audioFilename = `video-src${suffix}.wav`;
@@ -115,7 +115,13 @@ async function makeVideo(
   }
 
   logDebug(`capturing poster images`);
-  const imgs = await capturePosterImages(audio, workDir, volNum, numVols, devServerPort);
+  const imgs = await capturePosterImages(
+    audio,
+    workDir,
+    volNum,
+    numVols,
+    posterServerPort,
+  );
 
   const slideLines = slideshowConcatFileLines(
     durations,
@@ -145,11 +151,10 @@ async function capturePosterImages(
   workDir: string,
   volNum: number,
   numVols: number,
-  devPort?: number,
+  port: number,
 ): Promise<string[]> {
   const lang = audio.edition.document.friend.lang;
   const path = audio.edition.path;
-  const port = devPort || (await posterApp.start());
   const [makeScreenshot, closeHeadlessBrowser] = await posterApp.screenshot(port);
 
   async function saveScreenshot(path: string, filename: string): Promise<string> {

@@ -35,8 +35,8 @@ export const builder: CommandBuilder = function (yargs) {
     .option(`poster-server-port`, {
       alias: `d`,
       type: `number`,
-      describe: `use already running poster web-app server at given port`,
-      demand: false,
+      describe: `already running poster web-app server at given port`,
+      demand: true,
     });
 };
 
