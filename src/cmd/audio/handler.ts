@@ -473,7 +473,7 @@ async function ensureLocalMp3(
   const partDesc = `pt${partIndex + 1} (${quality})`;
   const cached = cache.getPart(fsData, partIndex);
   const mp3Info = fsData.parts[partIndex].mp3s[quality];
-  const localHash = ensureCache(cached[quality]).mp3Hash;
+  const localHash = cached[quality]?.mp3Hash;
   const remoteHash = await cloud.md5File(mp3Info.cloudPath);
   if (localHash === remoteHash) {
     logAction(`downloading missing mp3 for ${c`{cyan ${partDesc}}`}`);
