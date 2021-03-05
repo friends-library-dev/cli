@@ -230,6 +230,26 @@ let him be your slave--just as the Son of Man did not come to be served, but to 
 and to give his life a ransom for many.`"
 ____
 
+[quote.scripture, , ]
+____
+But Jesus called them to himself and said,
+"`You know that the rulers of the Gentiles lord it over them,
+and those who are great exercise authority over them.
+Yet it shall not be so among you; but whoever desires to become great among you,
+let him be your servant.
+And whoever desires to be first among you,
+let him be your slave--just as the Son of Man did not come to be served, but to serve,
+and to give his life a ransom for many.`"
+
+Paragraph two
+is fairly short.
+____
+
+[quote, Bob Barclay, Apology]
+____
+Ask not what your country can do for you.
+____
+
 [.offset]
 The below paragraph has the `.emphasized` class:
 
@@ -286,6 +306,9 @@ dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla par
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
 mollit anim id est laborum.
 
+[.numbered-group]
+====
+
 [.numbered]
 1+++.+++ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -314,6 +337,8 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
 dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+====
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
