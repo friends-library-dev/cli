@@ -406,7 +406,7 @@ async function createMp3Zip(
   fsData: AudioFsData,
   quality: AudioQuality,
 ): Promise<void> {
-  logAction(`reating mp3 zip ${c`{cyan (${quality})}`}`);
+  logAction(`creating mp3 zip ${c`{cyan (${quality})}`}`);
   const zipFilename = fsData.mp3Zips[quality].localFilename;
   const mp3Filenames: string[] = [];
   const unhashed: string[] = [];
