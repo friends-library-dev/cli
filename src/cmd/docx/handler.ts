@@ -18,7 +18,7 @@ export default async function handler({ pattern }: { pattern: string }): Promise
   deleteNamespaceDir(`docx`);
   const { ARTIFACT_DIR: dir } = dirs({ namespace: `docx`, srcPath: `src` });
   fs.ensureDirSync(dir);
-  ensureDockerImage(TAG, __dirname);
+  ensureDockerImage(TAG, __dirname.replace(`/dist/`, `/src/`));
 
   dpcs.forEach((dpc) => {
     hydrate.entities(dpc);
