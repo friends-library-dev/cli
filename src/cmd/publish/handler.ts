@@ -1,10 +1,8 @@
 import fs from 'fs-extra';
 import { execSync } from 'child_process';
-import fetch from 'node-fetch';
 import memoize from 'lodash/memoize';
 import { log, c, red } from 'x-chalk';
 import * as docMeta from '@friends-library/document-meta';
-import env from '@friends-library/env';
 import { Sha, DocPrecursor, ArtifactType } from '@friends-library/types';
 import * as artifacts from '@friends-library/doc-artifacts';
 import * as manifest from '@friends-library/doc-manifests';
@@ -30,41 +28,52 @@ export default async function publish(argv: PublishOptions): Promise<void> {
   const COVER_PORT = argv.coverServerPort || (await coverServer.start());
   const [makeScreenshot, closeHeadlessBrowser] = await coverServer.screenshot(COVER_PORT);
   const dpcs = dpcQuery.getByPattern(argv.pattern);
+  const errors: string[] = [];
 
   for (let i = 0; i < dpcs.length; i++) {
     const dpc = dpcs[i];
     const assetStart = Date.now();
     const progress = c`{gray (${String(i + 1)}/${String(dpcs.length)})}`;
 
-    logDocStart(dpc, progress);
-    hydrate.all([dpc]);
-    if (dpc.edition?.isDraft) {
-      continue;
+    try {
+      logDocStart(dpc, progress);
+      hydrate.all([dpc]);
+      if (dpc.edition?.isDraft) {
+        continue;
+      }
+
+      await validate(dpc);
+      const uploads = new Map<string, string>();
+      const fileId = getFileId(dpc);
+      const namespace = `fl-publish/${fileId}`;
+      const opts = { namespace, srcPath: fileId };
+      artifacts.deleteNamespaceDir(namespace);
+
+      await handlePaperbackAndCover(dpc, opts, uploads, meta);
+      await handleWebPdf(dpc, opts, uploads);
+      await handleEbooks(dpc, opts, uploads, makeScreenshot);
+      await handleAudioImage(dpc, opts, uploads, makeScreenshot);
+      log(c`   {gray Uploading generated files to cloud storage...}`);
+      await cloud.uploadFiles(uploads);
+      log(c`   {gray Saving edition meta...}`);
+      await docMeta.save(meta);
+    } catch (err) {
+      red(err.message);
+      errors.push(`${dpc.path} ${err.message}`);
     }
 
-    await validate(dpc);
-    const uploads = new Map<string, string>();
-    const fileId = getFileId(dpc);
-    const namespace = `fl-publish/${fileId}`;
-    const opts = { namespace, srcPath: fileId };
-    artifacts.deleteNamespaceDir(namespace);
-
-    await handlePaperbackAndCover(dpc, opts, uploads, meta);
-    await handleWebPdf(dpc, opts, uploads);
-    await handleEbooks(dpc, opts, uploads, makeScreenshot);
-    await handleAudioImage(dpc, opts, uploads, makeScreenshot);
-    log(c`   {gray Uploading generated files to cloud storage...}`);
-    await cloud.uploadFiles(uploads);
-    log(c`   {gray Saving edition meta...}`);
-    await docMeta.save(meta);
-
     logDocComplete(dpc, assetStart, progress);
-    argv.build && (await triggerSiteRebuilds());
   }
 
   if (!argv.coverServerPort) coverServer.stop(COVER_PORT);
   await closeHeadlessBrowser();
   logPublishComplete();
+
+  if (errors.length) {
+    red(`Encountered ${errors.length} errors:\n`);
+    red(`\t${errors.join(`\n\t`)}`);
+    process.exit(1);
+  }
 }
 
 async function handleAudioImage(
@@ -162,22 +171,6 @@ async function handleEbooks(
 
 function cloudPath(dpc: FsDocPrecursor, type: ArtifactType, volNum?: number): string {
   return `${dpc.path}/${edition(dpc).filename(type, volNum)}`;
-}
-
-async function triggerSiteRebuilds(): Promise<void> {
-  const { EN_BUILD_HOOK_URI, ES_BUILD_HOOK_URI } = env.require(
-    `EN_BUILD_HOOK_URI`,
-    `ES_BUILD_HOOK_URI`,
-  );
-  const opts = { method: `POST`, body: `{}` };
-  try {
-    await Promise.all([fetch(EN_BUILD_HOOK_URI, opts), fetch(ES_BUILD_HOOK_URI, opts)]);
-    log(c`{green √} Triggered site re-builds for English and Spanish`);
-  } catch (error) {
-    red(`Error triggering site deploy`);
-    console.error(error);
-    process.exit(1);
-  }
 }
 
 function getFileId(dpc: DocPrecursor): string {

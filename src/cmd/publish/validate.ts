@@ -2,7 +2,6 @@ import path from 'path';
 import { execSync } from 'child_process';
 import fetch from 'node-fetch';
 import env from '@friends-library/env';
-import { red } from 'x-chalk';
 import { FsDocPrecursor } from '@friends-library/dpc-fs';
 import lintPath from '../../lint/lint-path';
 
@@ -16,8 +15,9 @@ export default async function validate(dpc: FsDocPrecursor): Promise<void> {
 function lint(dpc: FsDocPrecursor): void {
   const lints = lintPath(dpc.fullPath);
   if (lints.count() > 0) {
-    red(`\n\nERROR: ${lints.count()} lint errors in ${dpc.path} must be fixed. 😬\n\n`);
-    process.exit(1);
+    throw new Error(
+      `\n\nERROR: ${lints.count()} lint errors in ${dpc.path} must be fixed. 😬\n\n`,
+    );
   }
 }
 
@@ -27,8 +27,7 @@ function gitBranch(dpc: FsDocPrecursor): void {
       .toString()
       .trim() === `master`;
   if (!isMaster) {
-    red(`\n\nERROR: git branch for ${dpc.path} is not <master>.`);
-    process.exit(1);
+    throw new Error(`\n\nERROR: git branch for ${dpc.path} is not <master>.`);
   }
 }
 
@@ -38,8 +37,7 @@ function gitStatus(dpc: FsDocPrecursor): void {
       .toString()
       .trim() === ``;
   if (!statusClean) {
-    red(`\n\nERROR: git status for ${dpc.path} is not clean.`);
-    process.exit(1);
+    throw new Error(`\n\nERROR: git status for ${dpc.path} is not clean.`);
   }
 }
 
@@ -59,8 +57,9 @@ async function gitCommit(dpc: FsDocPrecursor): Promise<void> {
   const json = await res.json();
 
   if (json.object.sha !== localSha) {
-    red(`\n\nERROR: git repo for ${dpc.path} is not up to date with origin/master.`);
-    process.exit(1);
+    throw new Error(
+      `\n\nERROR: git repo for ${dpc.path} is not up to date with origin/master.`,
+    );
   }
 }
 

@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import parsePdf from 'pdf-parse';
 import { choosePrintSize } from '@friends-library/lulu';
-import { log, c, red } from 'x-chalk';
+import { log, c } from 'x-chalk';
 import * as artifacts from '@friends-library/doc-artifacts';
 import { PrintSizeVariant, PrintSize, PRINT_SIZE_VARIANTS } from '@friends-library/types';
 import { paperbackInterior as paperbackManifest } from '@friends-library/doc-manifests';
@@ -26,8 +26,7 @@ export async function publishPaperback(
     try {
       [size, condense] = choosePrintSize(singlePages, splitPages);
     } catch (error) {
-      red(`${dpc.path} exceeds max allowable size, must be split`);
-      process.exit(1);
+      throw new Error(`${dpc.path} exceeds max allowable size, must be split`);
     }
   }
 

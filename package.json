@@ -21,7 +21,7 @@
     "@friends-library/adoc-lint": "^1.1.0",
     "@friends-library/adoc-utils": "^1.2.0",
     "@friends-library/cloud": "^1.2.0",
-    "@friends-library/doc-artifacts": "^1.0.1",
+    "@friends-library/doc-artifacts": "^1.1.0",
     "@friends-library/doc-manifests": "^1.0.1",
     "@friends-library/document-meta": "^2.2.0",
     "@friends-library/dpc-fs": "^1.2.1",
