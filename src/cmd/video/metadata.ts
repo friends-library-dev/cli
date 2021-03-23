@@ -1,4 +1,4 @@
-import { utf8ShortTitle } from '@friends-library/adoc-convert';
+import { utf8ShortTitle } from '@friends-library/adoc-utils';
 import { Audio } from '@friends-library/friends';
 import { Lang } from '@friends-library/types';
 

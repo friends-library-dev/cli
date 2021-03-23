@@ -119,12 +119,13 @@ async function handlePaperbackAndCover(
   });
 
   const existingMeta = meta.get(dpc.path);
+  const now = new Date().toISOString();
   meta.set(dpc.path, {
     ...(existingMeta ? { ...existingMeta } : {}),
-    published: existingMeta?.published || new Date().toISOString(),
-    updated: new Date().toISOString(),
-    adocLength: dpc.asciidoc.length,
-    numSections: dpc.sections.filter((s) => !s.isIntermediateTitle).length,
+    published: existingMeta?.published || now,
+    updated: now,
+    adocLength: dpc.asciidocFiles.reduce((acc, file) => acc + file.adoc.length, 0),
+    numSections: dpc.asciidocFiles.length,
     revision: dpc.revision.sha,
     productionRevision: getProductionRevision(),
     paperback: paperbackMeta,
@@ -170,6 +171,10 @@ async function handleEbooks(
 }
 
 function cloudPath(dpc: FsDocPrecursor, type: ArtifactType, volNum?: number): string {
+  if (type === `speech`) {
+    // TEMPORARY, until speech target is a first-class citizen
+    throw new Error(`Unsupported artifact type`);
+  }
   return `${dpc.path}/${edition(dpc).filename(type, volNum)}`;
 }
 

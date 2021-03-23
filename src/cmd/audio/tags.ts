@@ -1,5 +1,5 @@
 import { Audio } from '@friends-library/friends';
-import { utf8ShortTitle } from '@friends-library/adoc-convert';
+import { utf8ShortTitle } from '@friends-library/adoc-utils';
 
 export function getPartTags(audio: Audio, partIndex: number): Record<string, string> {
   const edition = audio.edition;

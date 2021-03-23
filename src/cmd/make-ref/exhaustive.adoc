@@ -1,0 +1,1746 @@
+[quote.epigraph, , Ps. 37:18]
+____
+The Lord knows the days of the upright,
+and their inheritance shall be forever.
+____
+
+[quote.epigraph, , John 1:1]
+____
+&hellip;In the beginning was the "`Word,`"--and the Word was God.
+____
+
+[quote.epigraph, , "Hooker`'s Ecclesiastical Polity, Preface, sect. ix"]
+____
+If Truth do anywhere manifest itself,
+seek not to smother it with glossing delusion;
+Acknowledge the greatness thereof, and think it your best victory,
+when the same prevails over you.
+____
+
+== Basic Formatting
+
+=== 1. Emphasis
+
+_Lorem ipsum dolor sit amet,_ consectetur adipisicing elit, sed do _eiusmod_ tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation _ullamco laboris **nisi** ut aliquip_ ex ea commodo consequat. Duis aute irure
+dolor in repre__hender__it in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit __anim id est laborum.__^
+footnote:[This footnote _has emphasis too._]
+
+==== .emphasized class on paragraph
+
+[.emphasized]
+Lorem ipsum dolor sit amet, _consectetur adipisicing elit,_ sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum 
+
+==== .blurb class on _paragraph_
+
+[.emphasized]
+Lorem ipsum dolor sit amet, _consectetur adipisicing elit,_ sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum 
+
+=== 2. Bold
+
+Lorem **ipsum dolor sit amet,** consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation **ullamco laboris _nisi_ ut aliquip** ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 3. Underline
+
+Lorem [.underline]#ipsum dolor sit amet,# consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 4. Italic, bold, and underline in blockquote
+
+[quote]
+____
+For prophecy _never came_ by the will of man,
+but holy men of God spoke as they were moved by the Holy Spirit.
+But there were **false prophets** also among the people,
+even as there shall be false teachers among you,
+who secretly shall bring in damnable heresies,
+[.underline]#even denying the Lord that bought them,#
+and bring upon themselves swift destruction.
+____
+
+=== 5. Italic, bold, and underline in scripture blockquote
+
+[quote.scripture]
+____
+For prophecy _never came_ by the will of man,
+but holy men of God spoke as they were moved by the Holy Spirit.
+But there were **false prophets** also among the people,
+even as there shall be false teachers among you,
+who secretly shall bring in damnable heresies,
+[.underline]#even denying the Lord that bought them,#
+and bring upon themselves swift destruction.
+____
+
+=== 6. .centered text
+
+[.centered]
+Look at me, I`'m centered!
+
+=== 7. .centered.emphasized text
+
+[.centered.emphasized]
+Look at me, I`'m centered and emphasized!
+
+=== 8. .no-indent paragraph
+
+[.no-indent]
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 9. The End
+
+[.the-end]
+Finis.
+
+== Quotes
+
+=== 1. Simple inline quotation marks
+
+Here is an "`inline quotation with smart quotes.`"
+And here is '`one with smart apostrophes (single-quotes).`'
+Here is an "`inline quotation that spans more than one line
+which sadly prevents syntax highlighting.`" I blame Dan Allen.^
+footnote:["`'`So take the talent`'`"]
+
+She said "`I trust our united language will forever be--'`Father, your will be done.`'`"
+After dining at +++_______+++`'s, a solemnity ensued.
+Foobar don`'t contraction.
+In the "`day of small things`", grew strong.
+As of July, `'72, foobar,
+that in `'93--in the date foobar.
+`'Tis no more than we should expect.
+"``'Tis soft knocks must enter hard blocks.`"
+"`Yes--`'tis her!-- `'tis her!--`'tis Rebarka Jones!`"
+
+=== 2. Block Quotes
+
+Unattributed block quote:
+
+[quote]
+____
+That James Nayler be set in the stocks, with his head in the stocks,
+in the Palace-yard, Westminster, during the space of two hours, on Thursday next,
+and then be whipped by the hangman as he is conveyed through the streets of London,
+from Westminster to the Old Exchange.
+There he is likewise to be set in the stocks,
+with his head in the stocks for the space of two hours.
+____
+
+Atributed block quote:
+
+[quote, Robert Barclay, "Apology, Prop. 7, Sec. 3"]
+____
+We therefore consider our redemption in a two-fold
+respect or state, both of which in their own nature are perfect,
+though in their application to us the one cannot be
+without respect to the other, as will be seen.
+____
+
+Skip the author:
+
+[quote, , "Apology, Prop. 7, Sec. 3"]
+____
+We therefore consider our redemption in a two-fold
+respect or state, both of which in their own nature are perfect.
+____
+
+Scripture quote:
+
+[quote.scripture, , Gal. 5:17]
+____
+The flesh lusts against the Spirit, and the Spirit against the flesh;
+and these are contrary one to the other.
+____
+
+Double paragraph quote:
+
+[quote]
+____
+We therefore consider our redemption in a two-fold
+respect or state, both of which in their own nature are perfect.
+
+We therefore consider our redemption in a two-fold
+respect or state, both of which in their own nature are perfect.
+____
+
+Double paragraph (attributed) quote:
+
+[quote, , Robert Barclay]
+____
+We therefore consider our redemption in a two-fold
+respect or state, both of which in their own nature are perfect.
+
+We therefore consider our redemption in a two-fold
+respect or state, both of which in their own nature are perfect.
+____
+
+Double paragraph (attributed) _scripture_ quote:
+
+[quote.scripture, , Gal. 5:17]
+____
+The flesh lusts against the Spirit, and the Spirit against the flesh;
+and these are contrary one to the other.
+
+The flesh lusts against the Spirit, and the Spirit against the flesh;
+and these are contrary one to the other.
+____
+
+== Chapter with Synopsis
+
+[.chapter-synopsis]
+* Commencement of Her Diary Entries
+* First Poetry
+* Death of Her Mother
+* A Religious "`Visit`" to Salem in Company with Her Father
+* A Religious Visit to Meetings in Indianafootnote:[Here is a note.]
+* Visit to a Neighboring Monthly Meeting
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et '`dolore magna`' aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+== Sub-Headings
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+This line ends with emdash--
+here is the dashed part--
+and here the sentence finishes.
+
+=== A level 3 heading
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+==== A level 4 heading
+
+Duis aute irure "`dolor`" in reprehenderit in voluptate velit esse pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.alt]
+==== An "`alternate`" level 4 heading
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.alt]
+=== An "`alternate`" level 3 heading
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.centered]
+=== Centered H3
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum
+
+[.asterism]
+'''
+
+[.offset]
+Below is an **old-style** (level 3) heading:
+
+[.old-style]
+=== A Description of Babylon / For the Sake of the Daughters of Zion / Who Presently Dwell in Her Midst.
+
+Babylon is the spiritual fabric of iniquity;
+the mystical great city of the great king of darkness.
+It is built in imitation of Zion, painted just like Zion,
+so that it be mistaken for Zion, and be worshiped there,
+instead of the true, eternal God, and King of Zion.
+
+[.asterism]
+'''
+
+[.offset]
+Below is an **old-style.bold** (level 3) heading:
+
+[.old-style.bold]
+=== SOME POSITIONS / Concerning the Apostasy from the Spirit and Life
+
+There has been a great apostasy from the Spirit of Christ,
+and from the true light and life of Christianity,
+which apostasy began in the apostles`' days, and ripened quickly afterwards.
+
+[.asterism]
+'''
+
+[.offset]
+Below is an **.blurb** (level 3) heading:
+
+[.blurb]
+=== The Way and Manner of My First Coming to the Knowledge of the Truth, and Way of Peace, Which Had Been the Breathing of My Soul From My Youth.
+
+After my long travail in the night of darkness and ignorance,
+wherein I had toiled and taken nothing,
+it pleased the Lord of his infinite goodness and tender mercy to me and many more,
+to send his true and faithful messenger, George Fox, into our parts,
+who published the everlasting gospel.
+
+[.asterism]
+'''
+
+[.offset]
+Below is an **.inline** (level 4) heading:
+
+There are many likenesses of the true holiness up and down in several professions;
+but there is no real holiness to be found, nor righteousness either,
+but in the trees of God`'s planting,
+in the branches which are by him ingrafted into the true vine and olive-tree,
+whose strength of virtue and holiness lies in the sap, which they daily receive from him.
+
+[.inline]
+==== XVIII. Concerning Christ`'s Works outwardly in the days of his flesh, and inwardly in the day and inward shining of the light of his Spirit in the heart
+
+Question. Which are greater,
+the works which Christ did outwardly on the bodies of men in the days of his flesh,
+or which he doth inwardly in men`'s minds and spirits
+by the powerful appearance and operation of his Spirit?
+Because Christ said, the works that he did, those that believed on him should do,
+and greater also, because he went to the Father. John 14:12.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[.asterism]
+'''
+
+[.offset]
+Below is an **.alt.centered** (level 4) heading:
+
+[.alt.centered]
+==== CONCERNING THE WAY OF KNOWING CHRIST
+​
+Christ is the minister of the true sanctuary which God has pitched, and not man.
+There is a city, "`whose builder and maker is God.`"
+The foundation stone, the cornerstone, the top stone of this city or building is Christ.
+
+[.asterism]
+'''
+
+[.offset]
+Below is an **.section-summary-preface** after a (level 3) heading:
+
+=== Proposition II
+
+[.section-summary-preface]
+That man, by all the imaginations that can enter into his heart,
+and by all the means he can use, or courses he can run,
+cannot return back to God again, or so much as desire it.
+
+The fall of man from God is such, that it hath benumbed all his senses; yea,
+so bereft him of them, that he cannot feel his own estate.
+He is dead, spiritually dead; and can no more feel his death, his spiritual death,
+than a man naturally dead can his natural death.
+
+== Breaks
+
+=== 1. .small-break between two paragraphs
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[.small-break]
+'''
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 2. .asterism between two paragraphs
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[.asterism]
+'''
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 3. .offset paragraph between two regular paragraphs
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[.offset]
++++[+++The narration continues:]
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+== Footnotes
+
+=== 1. Footnote on same line (no caret syntax)
+
+Here is a footnote without using caret and newline.footnote:[Here I am!]
+
+=== 2. Standard footnote with caret within paragraph
+
+Your last came to hand about two weeks after its date,
+which I should have answered sooner, but that I waited for his answer,
+being willing to comply with your request^
+footnote:[That part of my letter to Mary Peisley I
+omitted to transcribe in the before-written abstract.]
+in consulting him, which I had not done before.
+
+=== 3. Footnote with some quotation marks and italics, and bold
+
+In the darkest part of the night, a distinct luminous appearance, or glow of light,
+remained at our mast-head; a phenomenon only seen in dreadful weather.
+The sailors call it a corposant.^
+footnote:[(Originally written _Corpus Sancti._)
+See John Woolman`'s "`Journal,`" Dublin **edition,** 1704, p. 212,]
+I think such an appearance is mentioned in John Churchman`'s Journal,
+or that of some other worthy.
+
+=== 4. Footnote with paragraphs
+
+The truth had great dominion that day,
+so that those great men that were present did generally confess to it, saying,
+"`they believed that this principle must go over the whole world.`"
+There were at this meeting James Nayler, Thomas Goodyear,^
+footnote:[Thomas Goodyear became a faithful minister,
+and suffered much persecution and imprisonment.
+When in Oxford jail (for refusing to swear) the jailer put irons on his legs.
+{footnote-paragraph-split}
+The jailer also told the other prisoners if they wanted coats,
+they might take those of the Friends off their backs;
+but one of the prisoners answered he would go naked first.
+{footnote-paragraph-split}
+Thomas Goodyear was the author of
+_A Plain Testimony to the Ancient Truth and Work of God._
+He died at Selby, in 1693.]
+
+=== 5. Footnote with Poetry
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.^
+footnote:[Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+`    Foo bar,
+     So much baz.
+     - - - - - -
+     Foo bar
+     And baz. `
+Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]
+Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+=== 6. Footnote after .book-title
+
+Cuando el rey Carlos II había ascendido al trono,
+un hombre llamado Richard Blome publicó un libro titulado,
+[.book-title]#The Fanatic History,#^
+footnote:[Es decir, _Historia de los Fanáticos._]
+del que se decía que había sido publicado con la
+aprobación de los llamados teólogos ortodoxos,
+y dedicado por él al rey.
+
+== Discourse
+
+=== 1. Simple discourse parts
+
+[.discourse-part]
+Question: What is the state and condition of all men by nature,
+as they are begotten of the seed of the evil-doer,
+and come out of the loins of the first Adam?
+
+[.discourse-part]
+Answer: A state of sin and darkness; a state of death and misery;
+a state of enmity against God; a state accursed from God.
+
+=== 2. Discourse parts with one multi-paragraph section
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.discourse-part]
+Question: Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[.discourse-part]
+Answer: Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.discourse-part]
+Objection: Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[.discourse-part]
+Inquiry 4: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+=== 3. Discourse with manually italicized identifiers
+
+[.discourse-part]
+__Landlord.__--So John, you are busy?
+
+[.discourse-part]
+__Tenant.__--Yes, my landlord loves to see his tenants busy.
+
+[.discourse-part]
+__Landlord.__--But John, where were you that
+you we not at your quarterly meeting at York the other day,
+I saw most of your staunch Friends there, but you I missed?
+
+== Poetry
+
+=== 1. Single Stanza
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[verse]
+____
+Maker supreme, of heav`'n and earth,
+Of sea, of air, and sky;
+O! thou who gav`'st to all things birth,
+Lord, hear me when I cry.
+____
+
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 2. Multiple Stanza
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[verse]
+____
+Maker supreme, of heav`'n and earth,
+Of sea, of air, and sky;
+O! thou who gav`'st to all things birth,
+Lord, hear me when I cry.
+
+Maker supreme, of heav`'n and earth,
+Of sea, of air, and sky;
+O! thou who gav`'st to all things birth,
+Lord, hear me when I cry.
+____
+
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 3. Long line that wraps
+
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[verse]
+____
+Maker supreme, of heav`'n and earth,
+Of sea, of air, and sky, and wind, and waves, and mountains, and plains, and foothills, and temporal boreal forests, and arctic tundra, etc.;
+O! thou who gav`'st to all things birth,
+Lord, hear me when I cry.
+____
+
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 4. Poetry in footnote
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.^
+footnote:[And partial politics of all these parties,
+under the disguise of plausible professions, and that all were guilty of palpable errors:
+{footnote-paragraph-split}
+`    Seditione, dolis, scelere atque libidine & Ira
+     Iliacos intra muros peccatur; & extra.
+     - - - - - -
+     In factious deeds, deceit or lust or rage,
+     Republicans and royalists engage. `
+{footnote-paragraph-split}
+Under these circumstances, I meet with no addresses of theirs to the ruling powers of this era;
+but either plain and honest testimonies of individuals against their unrighteous deeds.]
+
+== Definition Lists
+
+=== 1. Simple Definition List
+
+Papist:: Roman Catholic
+
+Popery:: Roman Catholicism
+
+Professor::
+One who professes faith in Christ.
+This word has nothing to do with teachers or scholars.
+
+=== 2. Longer definitions, with embedded styling
+
+Original Edition::
+Thou takest up Cains weapons, and _fain_ wouldst thou kill thy brother,
+because his "`sacrifice`" in the--faith testifies against thine.
+
+This Edition::
+You take up Cains weapons, and **you would eagerly** kill your brother,
+because his '`sacrifice`' in the--faith testifies against yours.
+
+=== 3. Definition list with footnotes
+
+Papist:: Roman Catholicfootnote:[Papist]
+
+Popery:: Roman Catholicism^
+footnote:[Popery]
+
+== Numbered Groups
+
+=== 1. Simple Numbered group, between paragraphs
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[.numbered-group]
+====
+
+[.numbered]
+1+++.+++ That there is no way of being saved from sin and
+wrath eternal but by Christ alone who died at Jerusalem.
+There is no name, virtue, life,
+or power under heaven given by which lost man may be saved but his alone.
+
+[.numbered]
+2+++.+++ That there is no way of being saved by him,
+but through receiving him into the heart by a living faith,
+and having him formed in the heart.
+
+====
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 2. Numbered groups with manually italicized starters
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[.numbered-group]
+====
+
+[.numbered]
+_First,_ the ten commandments given by Moses from Mount Horeb were the
+covenant which God made with the Jews when he took them by the
+hand to lead them out of the land of Egypt.
+
+[.numbered]
+_Secondly,_ that covenant God found fault with because it was not able
+(through the weakness of the flesh on their parts) to keep them to God.
+
+[.numbered]
+_Thirdly,_ in Christ`'s coming God provides a new covenant,
+a better covenant, of which Christ is the mediator.
+
+====
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 3. Numbered group with multi-paragraph item
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[.numbered-group]
+====
+
+[.numbered]
+1+++.+++ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.numbered]
+2+++.+++ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.numbered]
+3+++.+++ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[.numbered]
+4+++.+++ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[.numbered]
+5+++.+++ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+====
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+== Syllogisms
+
+=== 1. Basic Syllogism
+
+But the apostle puts this controversy out of doubt,
+for, if we may believe his plain assertion,
+he tells us that some Gentiles indeed "`did the things contained in the law.`"
+From all of which I argue as follows:
+
+[.syllogism]
+* In every nation, he that fears God and works righteousness is accepted.
+* But some of the heathen did fear God, and wrought righteousness by Him.
+* Therefore they were accepted.
+
+=== 2. Syllogism with styling
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[.syllogism]
+* In every nation, he that _fears God_ and works righteousness is accepted.
+* But some of the heathen **did fear God,** and wrought righteousness by Him.
+* Therefore they [.underline]#were accepted.#
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+=== 3. Syllogism with footnote
+
+But the apostle puts this controversy out of doubt,
+for, if we may believe his plain assertion,
+he tells us that some Gentiles indeed "`did the things contained in the law.`"
+From all of which I argue as follows:
+
+[.syllogism]
+* In every nation, he that fears God and works righteousness is accepted.
+* But some of the heathen did fear God, and wrought righteousness by Him.
+* Therefore they were accepted.footnote:[Here is a footnote]
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[#book2.intermediate-title, short="Book II"]
+== History of the People Called Quakers
+
+[.division]
+=== Book II.
+
+[.blurb]
+==== From the End of the Commonwealth to the Restoration of monarchical Government.
+
+== Letters in flow of doc
+
+=== 1. Below shows a letter that has a +++`.signed-section-context-close`+++ BEFORE the signature:
+
+[.asterism]
+'''
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.embedded-content-document.letter]
+--
+
+[.salutation]
+Dear Friend,
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.signed-section-context-close]
+Carr End, the 11th of the First month, 1720.
+
+[.signed-section-signature]
+John Fothergill.
+
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.asterism]
+'''
+
+=== 2. Below shows double +++`.signed-section-context-open`+++ with salutation and content before:
+
+[.asterism]
+'''
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.embedded-content-document.letter]
+--
+
+[.signed-section-context-open]
+Springfield, Guilford Co., N. C,
+
+[.signed-section-context-open]
+Third Month 11th, 1825.
+
+[.salutation]
+Dear Friend:
+
+Your husband came to our house last Third-day morning,
+and attended our Monthly Meeting on Fourth-day;
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.signed-section-closing]
+Affectionately your daughter,
+
+[.signed-section-signature]
+Ambrose Rigge
+
+[.signed-section-context-close]
+Riegate in Surrey, the 24th of the Twelfth month, 1702-3.
+
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.asterism]
+'''
+
+=== 3. The next letter shows spacing of a simple signature that continues with text afterwards:
+
+[.embedded-content-document.letter]
+--
+
+[.salutation]
+Dear Friend,
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.signed-section-signature]
+Christopher Healy
+
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.asterism]
+'''
+
+=== 4. The next letter has a closing and signature, but no closing context:
+
+[.embedded-content-document.letter]
+--
+
+[.salutation]
+Dear Friend,
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.signed-section-closing]
+Thy friend,
+
+[.signed-section-signature]
+Ann Jones
+
+--
+
+[.asterism]
+'''
+
+=== 5. The next letter uses the +++`.letter-heading`+++ style heading:
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.embedded-content-document.letter]
+--
+
+[.letter-heading]
+Samuel Fothergill to His Sister
+
+[.salutation]
+My Dear Sister,
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.signed-section-signature]
+Samuel Fothergill
+
+--
+
+[.asterism]
+'''
+
+=== 6. The next letter has a +++`.signed-section-context-open`+++ with no salutation:
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[.embedded-content-document.letter]
+--
+
+[.signed-section-context-open]
+Carlisle, May 13, 1801.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.signed-section-signature]
+David Sands
+
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.asterism]
+'''
+
+=== 7. The next letter has TWO signatures:
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[.embedded-content-document.letter]
+--
+
+[.salutation]
+Dear Friend,
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.signed-section-signature]
+John Thomas, Chairman.
+
+[.signed-section-signature]
+James Watkin, Secretary.
+
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.asterism]
+'''
+
+=== 8. The next letter has TWO closing contexts:
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[.embedded-content-document.letter]
+--
+
+[.salutation]
+Dear friend,
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.signed-section-context-close]
+Given forth in Launceston Jail, in Cornwall.
+
+[.signed-section-context-close]
+To the Bowlers in the Green.
+
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 9. Bare Embedded Document
+
+About two hours before his death,
+he spoke the following words in the presence of several witnesses:
+
+[.embedded-content-document.testimony]
+--
+
+There is a spirit which I feel, that delights to do no evil,
+nor to revenge any wrong, but delights to endure all things,
+in hope to enjoy its own in the end.
+Its hope is to outlive all wrath and contention,
+and to weary out all exaltation and cruelty,
+or whatever is of a nature contrary to itself.
+
+--
+
+Thus he departed this life, in peace with the Lord, about the Ninth month, 1660,
+in the 44th year of his age,
+and was buried in Thomas Parnel`'s burying ground at King`'s Rippon.
+
+== Non-Embed Signed Chapter (Forward)
+
+This edition has been minimally and carefully
+modernized with the goal of making this valuable work
+somewhat more accessible for today`'s readers without changing
+the author`'s meaning or over-modernizing the original language.
+All footnotes are Rundell`'s, unless labeled __Editor`'s Note__.
+
+[.signed-section-signature]
+Jared Henderson
+
+[.signed-section-context-close]
+September, 2018
+
+== Postscripts
+
+=== 1. Standard Postscript
+
+[.embedded-content-document.letter]
+--
+
+[.salutation]
+Dear Cousin,
+
+I and three other Friends were seven days and nights,
+and had meetings among other people, without coming to any Friend`'s house,
+and travelled hard, having in that time rode near 300 miles in almost constant rain,
+which hurt my health; however the glorious name of the Lord was with us,
+and was magnified.
+
+[.signed-section-signature]
+John Fothergill.
+
+[.postscript]
+====
+
+P+++.+++ S. You may let Friends see the few lines enclosed:
+
+====
+
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+=== 2. Postscript with second signature below
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[.embedded-content-document.letter]
+--
+
+[.salutation]
+Friends,
+
+There is no schism, nor division, nor contention, nor strife, in heavenly Jerusalem,
+nor in the body of Christ, which is made up of living stones, a spiritual house.
+And Christ is not divided, for in him there is peace.
+Christ saith, in me you have peace.
+And he is from above, and not of this world; but in the world below, in the spirit of it,
+there is trouble: therefore keep in Christ, and walk in him, Amen.
+
+[.signed-section-signature]
+G+++.+++ F.
+
+[.postscript]
+====
+
+P+++.+++ S. Jerusalem was the mother of all true Christians before the apostacy; and since,
+the outward Christians are broken into many sects, and they have gotten many mothers;
+but all they that are come out of the apostacy by the power and spirit of Christ,
+Jerusalem that is above, is their mother, and none below her;
+who doth nourish all her spiritual children.
+
+====
+
+[.signed-section-signature]
+G+++.+++ F.
+
+[.signed-section-context-close]
+Read at the Yearly Meeting in London, 1691.
+
+--
+
+This year I find that William Goodridge, of Banwell, in Somersetshire,
+was released from prison, where he had been confined about thirteen years.
+He had been premunired for refusing to take the oath: and his goods,
+whereof the moveables were rated at about two hundred and forty-four pounds,
+and the real estate counted worth sixty pounds per annum, were confiscated.
+
+=== 3. Postscript with full-word identifier and trailing signature/sccc
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[.embedded-content-document.letter]
+--
+
+[.salutation]
+Friends,
+
+Therefore Friends and professors of the truth everywhere, in the fear,
+dread and awe of the most high God, live low before him;
+that so where this inexpressibly precious work is not experienced,
+there may be a true waiting and travailing in Spirit,
+in which a living cry and supplication will arise to the living God to accomplish it.
+
+[.postscript]
+====
+
+Postscript.--Dear Friends everywhere,
+feel that divine Hand and mighty Arm that gathered you out
+of the rollings and tossings of the nations and people,
+into the sweet, safe habitation of Israel,
+where you may dwell alone out of the defilements of the nations;
+where the hiding place will be known, until the word of the Lord be fulfilled,
+and his indignation pass over, to accomplish his own determination in the earth.
+
+====
+
+[.signed-section-signature]
+C+++.+++ M.
+
+[.signed-section-context-close]
+1680
+
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+=== 4. .signed-section-context-close followed by .postscript
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[.embedded-content-document.letter]
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[.signed-section-context-close]
+London, 8th mo.
+
+[.postscript]
+====
+
+P+++.+++ S.--Send me a wedge of cheese.
+
+====
+
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+=== 5. .signed-section-signature followed by .postscript
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
+
+[.embedded-content-document.letter]
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[.signed-section-signature]
+George Fox
+
+[.postscript]
+====
+
+P+++.+++ S.--Send me a wedge of cheese.
+
+====
+
+--
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
+
+== Chapter II. Life of Joseph Pike
+
+[.offset]
+This is a _numbered_ chapter heading which gets an automatic subtitle.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+== Chapter I. The Possession of Living Faith and its Fruits / And How it Has Been Found to Differ from the Faith of the World
+
+[.offset]
+This is a _segmented_ chapter heading.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.style-blurb]
+== A Testimony from the monthly meeting of Friends for the Western Division of Cornwall, held at Falmouth the 6th of the fourth month, 1795, concerning our late valued friend, Catherine Phillips, formerly Payton.
+
+[.offset]
+This is a **.style-blurb** chapter heading.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+== Section VIII.
+
+[.chapter-subtitle--blurb]
+How the Spirit of the Father works in those who are turned to it,
+and have taken heed to its manifestations, and are,
+in some measure, partakers of His power.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.centered.offset]
+This shows the **+++.chapter-subtitle--blurb+++** subheading.
+
+== Some Considerations
+
+[.heading-continuation-blurb]
+Concerning the State of Things relating to what hath been, now is,
+and shortly is to come to pass; warning all People to look about them,
+and to wait on the _Lord_ for the unerring Light of his Spirit,
+that they may know the Times and Seasons,
+and the Work which _God_ is now about in the World, which is Great and Wonderful;
+and so may not be found Fighters against _God,_ his Truths,
+and the Witnesses of this Age and Generation;
+more particularly Lamenting over and Exhorting _England._
+With a faithful testimony concerning the _Quakers._
+
+That the spouse of Christ,
+the true church which God built in the apostles`' days by his Spirit,
+the church against which the gates of hell could not prevail;
+the church which was the temple of the living God, the pillar and ground of truth;
+the woman which was clothed with the sun, who had the moon under her feet,
+and was crowned with a crown of twelve stars, etc.
+
+[.centered.offset]
+This shows the **.heading-continuation-blurb** subheading.
+
+== An Examination of the Grounds or Causes
+
+[.heading-continuation-blurb]
+Which are said to induce the _Court of Boston_ in _New England_
+to make that order or law of banishment, upon pain of death, against the _Quakers._
+
+[.heading-continuation-blurb]
+As also of the _Grounds_ and _Considerations_ by them produced,
+to manifest the _Warrantableness_ and _Justness_ both of their making and executing the same;
+which they now stand deeply engaged to _Defend,_ having already thereupon put two of them to death.
+
+[.heading-continuation-blurb]
+As also of some further grounds for justifying of the same,
+in an _Appendix_ to _John Norton`'s_ Book
+(which was printed after the Book itself, yet as part thereof);
+whereto he is said to be appointed by the General Court.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.centered.offset]
+This shows the _multiple_ **.heading-continuation-blurbs**.
+
+== The Way of Life and Death / Made Manifest and Set Before Men
+
+[.heading-continuation-blurb]
+Whereby the many Paths of _Death_ are impleaded,
+and the one Path of _Life_ propounded, and pleaded for;
+in some _Positions_ concerning the Apostasy from the _Christian Spirit_ and _Life;_
+with some _Principles_ guiding out of it; and also an _Answer_ to some Objections,
+whereby the simplicity in some may be entangled.
+
+[.section-author]
+By _Isaac Penington,_ the Younger
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.centered.offset]
+This shows the **.section-author** markup.
+
+== The Way of Life and Death / Made Manifest and Set Before Men
+
+[.heading-continuation-blurb]
+Whereby the many Paths of _Death_ are impleaded,
+and the one Path of _Life_ propounded, and pleaded for;
+in some _Positions_ concerning the Apostasy from the _Christian Spirit_ and _Life;_
+with some _Principles_ guiding out of it; and also an _Answer_ to some Objections,
+whereby the simplicity in some may be entangled.
+
+[.section-author]
+By _Isaac Penington,_ the Younger
+
+[.section-author-context]
+Prisoner at Reading Jail for the testimony of truth
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.centered.offset]
+This shows the **.section-author-context** markup.
+
+== The Way of Life and Death / Made Manifest and Set Before Men
+
+[.heading-continuation-blurb]
+Whereby the many Paths of _Death_ are impleaded,
+and the one Path of _Life_ propounded, and pleaded for;
+in some _Positions_ concerning the Apostasy from the _Christian Spirit_ and _Life;_
+with some _Principles_ guiding out of it; and also an _Answer_ to some Objections,
+whereby the simplicity in some may be entangled.
+
+[.section-date]
+1658
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.centered.offset]
+This shows the **.section-date** markup.
+
+== The Scattered Sheep Sought After
+
+[.heading-continuation-blurb]
+In a _Lamentation_ over the General Loss of the powerful _Presence of God_
+in his People since the Days of the _Apostles;_
+with a particular Bewailing of the Withering and Death
+of those precious Buddings-forth of Life,
+which appeared in many at the Beginning of the late Troubles.
+
+[.section-author]
+By _Isaac Penington,_ the Younger
+
+[.section-date]
+1659
+
+[quote.section-epigraph]
+____
+When Ephraim spake trembling, he exalted himself in Israel;
+but when he offended in Baal, he died.
+And now they sin more and more, etc., therefore they shall be as the morning cloud,
+as the early dew, etc. Hos. 13:1-3
+____
+
+=== Preface
+
+"`My people have committed two great evils; they have forsaken me,
+the fountain of living waters, and hewed them out cisterns, broken cisterns,
+that can hold no water.`" This was ever and anon the
+complaint of the Lord concerning Israel,
+from the beginning to the end.
+
+[.centered.offset]
+This shows the **.section-epigraph** markup.
+
+[#appendix.intermediate-title, short="Appendix"]
+== Appendix to Piety Promoted
+
+[.emphasized.weight-normal.small-caps]
+=== Containing Brief Biographical Notices of Some of the Members of the Religious Society of friends.
+
+==== By William and Thomas Evans
+
+[.asterism]
+'''
+
+[.blurb]
+"`Not by works of righteousness which we have done,
+but according to his mercy he saved us by the washing
+of regeneration and renewing of the Holy Ghost;
+which he shed on us abundantly through Jesus Christ our Savior;
+that being justified by his grace we should be made
+heirs according to the hope of eternal life.`"
+
+[.offset]
+This section shows off **.weight-normal** and **.small-caps** class modifiers.
+
+== Unusual combination spacing
+
+=== 1. .letter-heading followed by .signed-section-context-open
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+[.letter-heading]
+To His Sister
+
+[.signed-section-context-open]
+London, 8th mo.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 2. .offset followed by .embedded-content-document
+
+[.offset]
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+[.embedded-content-document]
+--
+
+[.signed-section-context-open]
+London, 8th mo.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+--
+
+=== 3. Level 3 subheading, followed by non-embed .letter-heading
+
+The knowledge of these truths only, is not enough;
+it is only so far as they are felt and experienced in the mind of a believer,
+that they communicate peace and happiness to the soul.
+
+[.centered]
+=== LETTER V.
+
+[.letter-heading]
+To Her Mother.
+
+[.signed-section-context-open]
+1795.
+
+The two dear girls`' letters delighted me:
+what a favour to have so many in a family candidates for heaven!
+Dear mother, you and Lucy are wanting some strong earnest that you are children of God:
+think for a moment that you love him who has died for you;
+don`'t you depend entirely upon him?
+Remember you love him because he first loved you: let us but believe,
+and we shall find him precious.
+
+=== 4. Level 3 subheading, followed by .blurb level 3
+
+[.small-break]
+'''
+
+[.centered]
+=== Epistle 386.
+
+[.blurb]
+=== An epistle to Friends, against pride, haughtiness, and the vain customs and fashions of the world.
+
+[.salutation]
+Friends,
+
+Here you may see how the holy men of God testify, against pride, haughtiness,
+high-mindedness, and the abominable customs and fashions,
+and the ungodly lusts of the world, which are not of the Father, but of the world.
+And how man and woman came into these things by forsaking the Lord,
+and so falling from his image.
+And now Christ renews them up into the image of God again, to serve him in humility.
+And all that are in the image of God are of one mind.
+
+=== 5. Level 3 subheading, followed by .blurb level 4
+
+[.small-break]
+'''
+
+[.centered]
+=== Epistle 333.
+
+[.blurb]
+==== An epistle to be read in the men and women`'s meetings.
+
+[.salutation]
+Dear Friends,
+
+My love in the Lord Jesus Christ (to you all) in whom I have laboured,
+and my desires are, the God of all peace, and the son of peace,
+may fill your hearts with his love, and peace, and wisdom, and knowledge, in all things,
+to do his heavenly glorious will: in that you will know his son`'s doctrine;
+and as you know it, obey it.
+
+== Book Titles
+
+=== 1. Basic Book Titles
+
+[.book-title]#Apology,# consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco [.book-title]#Journal of George Fox.#
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 2. .book-title within .emphasized
+
+[.emphasized]
+[.book-title]#Apology,# consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco [.book-title]#Journal of George Fox.#
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+=== 3. Footnote after .book-title
+
+Cuando el rey Carlos II había ascendido al trono,
+un hombre llamado Richard Blome publicó un libro titulado,
+[.book-title]#The Fanatic History,#^
+footnote:[Es decir, _Historia de los Fanáticos._]
+del que se decía que había sido publicado con la
+aprobación de los llamados teólogos ortodoxos,
+y dedicado por él al rey.
+
+=== 4. .book-title in footnote
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud^
+footnote:[See [.book-title]#Apology# by Robert Barclay]
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.^
+footnote:[See [.book-title]#Apology#]
+
+[#ch-2.style-blurb, short="Chapter title with book-title"]
+== Chapter title with book title [.book-title]#A Vindication of a Book Called Some Gospel Truth`'s Opened,# are these following principles
+
+[.offset]
+The above chapter title has a **.book-title** in it.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.

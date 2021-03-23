@@ -43,29 +43,19 @@ export default async function handler(argv: Arguments<MakeOptions>): Promise<voi
     process.exit(1);
   }
 
-  let mutator = (adoc: string): string => adoc;
   if (argv.head) {
-    mutator = (adoc: string): string => {
-      return adoc.split(`\n`).slice(0, 100).join(`\n`);
-    };
+    // @TODO reimplement (if needed) after parser/evaluator refactor
   }
 
   if (argv.toc) {
-    mutator = (adoc) => adoc.split(`\n\n`).shift() || ``;
+    // @TODO reimplement (if needed) after parser/evaluator refactor
   }
 
-  dpcs.forEach(hydrate.meta);
-  dpcs.forEach(hydrate.revision);
-  dpcs.forEach(hydrate.config);
-  dpcs.forEach(hydrate.customCode);
-  dpcs.forEach((dpc) => hydrate.asciidoc(dpc, isolate, mutator));
-
-  // lint before hydrate.process so linter catches adoc > html errors
   if (!skipLint) {
     dpcs.forEach((dpc) => lint(dpc.fullPath, fix, isolate));
   }
 
-  dpcs.forEach(hydrate.process);
+  hydrate.all(dpcs);
 
   const namespace = `fl-make`;
   artifacts.deleteNamespaceDir(namespace);
@@ -114,6 +104,8 @@ async function getTypeManifests(
       };
       return manifest.paperbackInterior(dpc, conf);
     }
+    case `speech`:
+      return manifest.speech(dpc);
     case `mobi`:
     case `epub`: {
       const conf: EbookConfig = {

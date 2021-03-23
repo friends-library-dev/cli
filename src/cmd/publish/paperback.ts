@@ -62,7 +62,9 @@ async function makeSingleVolumes(
   const pages: SinglePages = { s: 0, m: 0, xl: 0, 'xl--condensed': 0 };
   const files: SingleFiles = { s: ``, m: ``, xl: ``, 'xl--condensed': `` };
 
-  for (const variant of PRINT_SIZE_VARIANTS) {
+  const variants = [...PRINT_SIZE_VARIANTS];
+  let variant: PrintSizeVariant | undefined = undefined;
+  while ((variant = variants.shift())) {
     log(c`     {magenta.dim ->} {gray size:} {cyan ${variant}}`);
     const size = variant === `xl--condensed` ? `xl` : variant;
     const [manifest] = await paperbackManifest(dpc, {
@@ -76,6 +78,10 @@ async function makeSingleVolumes(
     const filepath = await artifacts.pdf(manifest, file, opts);
     files[variant] = filepath;
     pages[variant] = await getPages(filepath);
+    if (canSkipLargerSizes(variant, pages)) {
+      log(c`     {gray skipping unneeded page size checks: [${variants.join(`, `)}]}`);
+      return [pages, files];
+    }
   }
 
   return [pages, files];
@@ -133,4 +139,20 @@ function filename(dpc: FsDocPrecursor, variant: string, volumeNumber?: number): 
   ]
     .filter((part) => !!part)
     .join(`--`);
+}
+
+function canSkipLargerSizes(variant: PrintSizeVariant, pages: SinglePages): boolean {
+  if (variant === `xl--condensed`) {
+    return false;
+  }
+
+  if (typeof pages[variant] !== `number` || pages[variant] === 0) {
+    return false;
+  }
+
+  try {
+    return choosePrintSize(pages, undefined)[0] === variant;
+  } catch (err) {
+    return false;
+  }
 }

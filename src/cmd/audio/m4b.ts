@@ -5,7 +5,7 @@ import { red } from 'x-chalk';
 import { Audio } from '@friends-library/friends';
 import { AudioQuality } from '@friends-library/types';
 import { AudioFsData } from './types';
-import { utf8ShortTitle } from '@friends-library/adoc-convert';
+import { utf8ShortTitle } from '@friends-library/adoc-utils';
 import * as ffmpeg from '../../ffmpeg';
 import { suffixThe } from './tags';
 

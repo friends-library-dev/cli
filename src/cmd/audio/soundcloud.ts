@@ -4,7 +4,7 @@ import env from '@friends-library/env';
 import { Audio } from '@friends-library/friends';
 import { AudioQuality, Lang } from '@friends-library/types';
 import { translate, setLocale } from '@friends-library/locale';
-import { utf8ShortTitle } from '@friends-library/adoc-convert';
+import { utf8ShortTitle } from '@friends-library/adoc-utils';
 import { logDebug } from '../../sub-log';
 import Client from './SoundCloudClient';
 import { getPartTitle } from './tags';

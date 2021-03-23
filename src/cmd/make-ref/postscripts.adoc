@@ -547,7 +547,7 @@ mollit anim id est laborum.
 == Just PS
 
 [.centered]
-==== LETTER XI.
+=== LETTER XI.
 
 [.letter-heading]
 To Her Mother.
@@ -593,7 +593,7 @@ P+++.+++ S. When you give my message give it in love: there is great harmony in 
 ====
 
 [.centered]
-==== LETTER XII.
+=== LETTER XII.
 
 [.letter-heading]
 To Her Mother.
@@ -992,7 +992,7 @@ as it informs me you are treated with less severity than heretofore, etc.
 --
 
 [.letter-heading]
-To * * * * *,
+To _______,
 
 [.salutation]
 Respected Friend;
