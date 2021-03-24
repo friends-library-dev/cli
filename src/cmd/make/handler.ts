@@ -5,10 +5,7 @@ import { log, red } from 'x-chalk';
 import * as manifest from '@friends-library/doc-manifests';
 import * as artifacts from '@friends-library/doc-artifacts';
 import { hydrate, query as dpcQuery, FsDocPrecursor } from '@friends-library/dpc-fs';
-import lintFixPath from '../../lint/lint-fix-path';
-import lintPath from '../../lint/lint-path';
-import { printLints } from '../../lint/display';
-import send from './send';
+import { ParserError } from '@friends-library/parser';
 import {
   ArtifactType,
   DocPrecursor,
@@ -17,6 +14,10 @@ import {
   EbookConfig,
   PrintSize,
 } from '@friends-library/types';
+import lintFixPath from '../../lint/lint-fix-path';
+import lintPath from '../../lint/lint-path';
+import { printLints } from '../../lint/display';
+import send from './send';
 
 export interface MakeOptions {
   pattern: string;
@@ -62,7 +63,16 @@ export default async function handler(argv: Arguments<MakeOptions>): Promise<voi
 
   let files: string[] = [];
   for (const dpc of dpcs) {
-    files = files.concat(await makeDpc(dpc, argv, namespace));
+    try {
+      files = files.concat(await makeDpc(dpc, argv, namespace));
+    } catch (err) {
+      if (err instanceof ParserError) {
+        console.log(err.codeFrame);
+      } else {
+        red(err.message);
+      }
+      process.exit(1);
+    }
   }
 
   !noOpen && files.forEach((file) => execSync(`open "${file}"`));

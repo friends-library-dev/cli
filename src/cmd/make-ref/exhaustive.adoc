@@ -661,6 +661,12 @@ This Edition::
 You take up Cains weapons, and **you would eagerly** kill your brother,
 because his '`sacrifice`' in the--faith testifies against yours.
 
+Premunire:: Premunire was a legal judgment designed to disenfranchise
+those who refused to formally swear allegiance to the King of England.
+Those under a sentence of premunire were considered traitors to their country.
+They lost all rights to property and possessions,
+were removed from under the kings protection, and were often imprisoned for life.
+
 === 3. Definition list with footnotes
 
 Papist:: Roman Catholicfootnote:[Papist]

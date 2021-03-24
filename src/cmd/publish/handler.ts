@@ -9,6 +9,7 @@ import * as manifest from '@friends-library/doc-manifests';
 import * as cloud from '@friends-library/cloud';
 import { hydrate, query as dpcQuery, FsDocPrecursor } from '@friends-library/dpc-fs';
 import { Edition } from '@friends-library/friends';
+import { ParserError } from '@friends-library/parser';
 import * as coverServer from './cover-server';
 import { ScreenshotTaker } from './cover-server';
 import validate from './validate';
@@ -58,8 +59,13 @@ export default async function publish(argv: PublishOptions): Promise<void> {
       log(c`   {gray Saving edition meta...}`);
       await docMeta.save(meta);
     } catch (err) {
-      red(err.message);
-      errors.push(`${dpc.path} ${err.message}`);
+      if (err instanceof ParserError) {
+        console.log(err.codeFrame);
+        errors.push(`${dpc.path} ${err.codeFrame}`);
+      } else {
+        red(err.message);
+        errors.push(`${dpc.path} ${err.message}`);
+      }
     }
 
     logDocComplete(dpc, assetStart, progress);

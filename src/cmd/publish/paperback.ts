@@ -78,7 +78,7 @@ async function makeSingleVolumes(
     const filepath = await artifacts.pdf(manifest, file, opts);
     files[variant] = filepath;
     pages[variant] = await getPages(filepath);
-    if (canSkipLargerSizes(variant, pages)) {
+    if (canSkipLargerSizes(variant, pages, dpc.printSize)) {
       log(c`     {gray skipping unneeded page size checks: [${variants.join(`, `)}]}`);
       return [pages, files];
     }
@@ -141,7 +141,11 @@ function filename(dpc: FsDocPrecursor, variant: string, volumeNumber?: number): 
     .join(`--`);
 }
 
-function canSkipLargerSizes(variant: PrintSizeVariant, pages: SinglePages): boolean {
+function canSkipLargerSizes(
+  variant: PrintSizeVariant,
+  pages: SinglePages,
+  overridePrintSize?: PrintSize,
+): boolean {
   if (variant === `xl--condensed`) {
     return false;
   }
@@ -150,8 +154,13 @@ function canSkipLargerSizes(variant: PrintSizeVariant, pages: SinglePages): bool
     return false;
   }
 
+  if (overridePrintSize && variant !== overridePrintSize) {
+    return false;
+  }
+
   try {
-    return choosePrintSize(pages, undefined)[0] === variant;
+    const [size, condense] = choosePrintSize(pages, undefined);
+    return size === variant && condense === false;
   } catch (err) {
     return false;
   }
