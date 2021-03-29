@@ -44,11 +44,9 @@ export default async function handler(argv: Arguments<MakeOptions>): Promise<voi
     process.exit(1);
   }
 
-  if (argv.head) {
-    // @TODO reimplement (if needed) after parser/evaluator refactor
-  }
+  hydrate.all(dpcs, isolate);
 
-  if (argv.toc) {
+  if (argv.head) {
     // @TODO reimplement (if needed) after parser/evaluator refactor
   }
 
@@ -56,7 +54,9 @@ export default async function handler(argv: Arguments<MakeOptions>): Promise<voi
     dpcs.forEach((dpc) => lint(dpc.fullPath, fix, isolate));
   }
 
-  hydrate.all(dpcs);
+  if (argv.toc) {
+    setTocOnly(dpcs, argv);
+  }
 
   const namespace = `fl-make`;
   artifacts.deleteNamespaceDir(namespace);
@@ -181,4 +181,15 @@ function lint(dpcPath: string, fix: boolean, isolate?: number): void {
     red(`\n\nERROR: ${lints.count()} lint errors must be fixed. 😬 `);
     process.exit(1);
   }
+}
+
+function setTocOnly(dpcs: DocPrecursor[], argv: MakeOptions): void {
+  argv.noFrontmatter = false;
+  dpcs.forEach((dpc) => {
+    dpc.asciidocFiles.forEach(({ adoc }, index) => {
+      const lines = adoc.split(`\n`);
+      const chHeadIdx = lines.findIndex((l) => l.startsWith(`== `));
+      dpc.asciidocFiles[index].adoc = lines.slice(0, chHeadIdx + 1).join(`\n`);
+    });
+  });
 }
