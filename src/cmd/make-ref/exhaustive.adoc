@@ -1702,6 +1702,46 @@ may fill your hearts with his love, and peace, and wisdom, and knowledge, in all
 to do his heavenly glorious will: in that you will know his son`'s doctrine;
 and as you know it, obey it.
 
+=== 6. .offset.emphasized followed by embed
+
+[.offset.emphasized]
+The following sentences being delivered by John
+Churchman in two of his public testimonies,
+were soon after committed to writing by a Friend who was present,
+and appearing worthy to be further preserved, are now communicated.
+
+[.embedded-content-document]
+--
+
+In a first-day meeting at East Nottingham, the 19th of the twelfth month, 1756,
+he expressed nearly as follows:
+"`I felt my mind in this meeting remarkably drawn from outward observation,
+and was commanded to centre in deep and awful silence,
+wherein there was such a flowing of good will to mankind,
+as is scarcely to be uttered by tongue.
+
+--
+
+=== 7. .old-style h4 after blurb.h3
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.blurb]
+=== A Dissertation on the Discipline exercised amongst the People called Quakers
+
+[.old-style]
+==== Sect. I
+
+The first meeting for church affairs that I find any clear account of,
+was held at Skipton in Yorkshire, whether occasionally by particular appointment,
+or at certain stated times, doth not appear.
+Of this meeting, the nature and use is described by George Fox in his journal as follows:
+
 == Book Titles
 
 === 1. Basic Book Titles
