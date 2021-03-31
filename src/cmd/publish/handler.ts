@@ -54,6 +54,7 @@ export default async function publish(argv: PublishOptions): Promise<void> {
       await handleWebPdf(dpc, opts, uploads);
       await handleEbooks(dpc, opts, uploads, makeScreenshot);
       await handleAudioImage(dpc, opts, uploads, makeScreenshot);
+      await handleSpeech(dpc, opts, uploads);
       log(c`   {gray Uploading generated files to cloud storage...}`);
       await cloud.uploadFiles(uploads);
       log(c`   {gray Saving edition meta...}`);
@@ -109,6 +110,20 @@ async function handleWebPdf(
     .replace(/\.pdf$/, ``);
   const path = await artifacts.pdf(webManifest, filename, opts);
   uploads.set(path, cloudPath(dpc, `web-pdf`));
+}
+
+async function handleSpeech(
+  dpc: FsDocPrecursor,
+  opts: { namespace: string; srcPath: string },
+  uploads: Map<string, string>,
+): Promise<void> {
+  log(c`   {gray Creating speech artifact...}`);
+  const [speechManifest] = await manifest.speech(dpc);
+  const filename = edition(dpc)
+    .filename(`speech`)
+    .replace(/\.txt$/, ``);
+  const path = await artifacts.speech(speechManifest, filename, opts);
+  uploads.set(path, cloudPath(dpc, `speech`));
 }
 
 async function handlePaperbackAndCover(
@@ -177,10 +192,6 @@ async function handleEbooks(
 }
 
 function cloudPath(dpc: FsDocPrecursor, type: ArtifactType, volNum?: number): string {
-  if (type === `speech`) {
-    // TEMPORARY, until speech target is a first-class citizen
-    throw new Error(`Unsupported artifact type`);
-  }
   return `${dpc.path}/${edition(dpc).filename(type, volNum)}`;
 }
 
