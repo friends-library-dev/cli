@@ -121,7 +121,7 @@ async function handleSpeech(
   const [speechManifest] = await manifest.speech(dpc);
   const filename = edition(dpc)
     .filename(`speech`)
-    .replace(/\.txt$/, ``);
+    .replace(/\.html$/, ``);
   const path = await artifacts.speech(speechManifest, filename, opts);
   uploads.set(path, cloudPath(dpc, `speech`));
 }
