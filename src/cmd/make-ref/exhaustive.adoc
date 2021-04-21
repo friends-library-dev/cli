@@ -21,7 +21,7 @@ ____
 
 === 1. Emphasis
 
-_Lorem ipsum dolor sit amet,_ consectetur adipisicing elit, sed do _eiusmod_ tempor
+_Lorem ipsum dolor sit amet,_ consectetur & adipisicing elit, sed do _eiusmod_ tempor
 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
 exercitation _ullamco laboris **nisi** ut aliquip_ ex ea commodo consequat. Duis aute irure
 dolor in repre__hender__it in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
@@ -29,6 +29,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 mollit __anim id est laborum.__^
 footnote:[This footnote _has emphasis too._]
 
+[#jared.centered]
 ==== .emphasized class on paragraph
 
 [.emphasized]
@@ -37,7 +38,7 @@ incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostr
 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
 dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-mollit anim id est laborum 
+mollit anim id est <<note-A,laborum.>>
 
 ==== .blurb class on _paragraph_
 
@@ -1783,6 +1784,18 @@ footnote:[See [.book-title]#Apology#]
 
 [.offset]
 The above chapter title has a **.book-title** in it.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+== Appendix
+
+[#note-A]
+=== Appendix A
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud

@@ -16,6 +16,7 @@ import * as eachYml from './cmd/each-yml';
 import * as eachAdoc from './cmd/each-adoc';
 import * as publishRef from './cmd/make-ref';
 import * as docx from './cmd/docx';
+import * as parse from './cmd/parse';
 
 /* eslint-disable no-unused-expressions */
 yargs
@@ -35,4 +36,5 @@ yargs
   .command(eachYml)
   .command(docx)
   .command(eachAdoc)
+  .command(parse)
   .help().argv;
