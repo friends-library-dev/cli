@@ -98,6 +98,7 @@ export const builder: CommandBuilder = function (yargs) {
             case `mobi`:
             case `web-pdf`:
             case `paperback-interior`:
+            case `app-ebook`:
               acc.push(target);
               break;
             default:

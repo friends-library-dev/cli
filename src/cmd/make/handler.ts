@@ -1,9 +1,11 @@
+import fs from 'fs-extra';
 import { execSync } from 'child_process';
 import { Arguments } from 'yargs';
 import { sync as glob } from 'glob';
 import { log, red } from 'x-chalk';
 import * as manifest from '@friends-library/doc-manifests';
 import * as artifacts from '@friends-library/doc-artifacts';
+import { appEbook as appEbookCss } from '@friends-library/doc-css';
 import { hydrate, query as dpcQuery, FsDocPrecursor } from '@friends-library/dpc-fs';
 import { ParserError } from '@friends-library/parser';
 import {
@@ -44,7 +46,14 @@ export default async function handler(argv: Arguments<MakeOptions>): Promise<voi
     process.exit(1);
   }
 
-  hydrate.all(dpcs, isolate);
+  if (argv.toc) {
+    argv.noFrontmatter = false;
+  }
+
+  hydrate.all(dpcs, {
+    isolate,
+    chapterHeadingsOnly: argv.toc === true,
+  });
 
   if (argv.head) {
     // @TODO reimplement (if needed) after parser/evaluator refactor
@@ -52,10 +61,6 @@ export default async function handler(argv: Arguments<MakeOptions>): Promise<voi
 
   if (!skipLint) {
     dpcs.forEach((dpc) => lint(dpc.fullPath, fix, isolate));
-  }
-
-  if (argv.toc) {
-    setTocOnly(dpcs, argv);
   }
 
   const namespace = `fl-make`;
@@ -88,10 +93,10 @@ export async function makeDpc(
   for (const type of argv.target) {
     const manifests = await getTypeManifests(type, dpc, argv);
     for (let idx = 0; idx < manifests.length; idx++) {
-      const filename = makeFilename(dpc, idx, type);
-      const srcPath = makeSrcPath(dpc, idx, type);
+      const filename = makeFilename(dpc, type);
+      const srcPath = makeSrcPath(dpc, type);
       const options = { namespace, srcPath, check: argv.check };
-      files.push(await artifacts.create(manifests[idx], filename, options));
+      files.push(await artifacts.create(type, manifests[idx], filename, options));
     }
   }
   return files;
@@ -116,6 +121,8 @@ async function getTypeManifests(
     }
     case `speech`:
       return manifest.speech(dpc);
+    case `app-ebook`:
+      return appEbookWithCss(dpc);
     case `mobi`:
     case `epub`: {
       const conf: EbookConfig = {
@@ -129,10 +136,11 @@ async function getTypeManifests(
   return [];
 }
 
-function makeFilename(dpc: DocPrecursor, idx: number, type: ArtifactType): string {
+function makeFilename(dpc: DocPrecursor, type: ArtifactType): string {
   let suffix = ``;
   if (type === `paperback-cover`) suffix = `(cover)`;
   if (type === `web-pdf`) suffix = `(web)`;
+  if (type === `app-ebook`) suffix = `(app-ebook)`;
   if (type === `mobi`) suffix = `${Math.floor(Date.now() / 1000)}`;
   return [
     dpc.friendInitials.join(``),
@@ -145,8 +153,8 @@ function makeFilename(dpc: DocPrecursor, idx: number, type: ArtifactType): strin
     .join(`--`);
 }
 
-function makeSrcPath(dpc: DocPrecursor, idx: number, type: ArtifactType): string {
-  let path = makeFilename(dpc, idx, type);
+function makeSrcPath(dpc: DocPrecursor, type: ArtifactType): string {
+  let path = makeFilename(dpc, type);
   if (type === `mobi` || type === `epub`) {
     path += `/${type}`;
   }
@@ -183,13 +191,24 @@ function lint(dpcPath: string, fix: boolean, isolate?: number): void {
   }
 }
 
-function setTocOnly(dpcs: DocPrecursor[], argv: MakeOptions): void {
-  argv.noFrontmatter = false;
-  dpcs.forEach((dpc) => {
-    dpc.asciidocFiles.forEach(({ adoc }, index) => {
-      const lines = adoc.split(`\n`);
-      const chHeadIdx = lines.findIndex((l) => l.startsWith(`== `));
-      dpc.asciidocFiles[index].adoc = lines.slice(0, chHeadIdx + 1).join(`\n`);
-    });
-  });
+async function appEbookWithCss(dpc: DocPrecursor): Promise<[FileManifest]> {
+  const [appManifest] = await manifest.appEbook(dpc);
+  const htmlFilename = Object.keys(appManifest)[0];
+  const { ARTIFACT_DIR } = artifacts.dirs({ namespace: `fl-make/_app-ebook-css` });
+  const cssPath = `${ARTIFACT_DIR}/app-ebook.css`;
+  fs.ensureDirSync(ARTIFACT_DIR);
+  fs.writeFileSync(cssPath, appEbookCss());
+  const inner = appManifest[htmlFilename];
+  const wrappedHtml = `
+    <html>
+      <head>
+        <link href="file://${cssPath}" rel="stylesheet">
+      </head>
+      <body>
+        ${inner}
+      </body>
+    </html>
+  `;
+  appManifest[htmlFilename] = wrappedHtml;
+  return [appManifest];
 }

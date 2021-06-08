@@ -2,6 +2,10 @@ import puppeteer from 'puppeteer-core';
 import { exec, execSync } from 'child_process';
 import env from '@friends-library/env';
 import { green } from 'x-chalk';
+import {
+  LARGEST_THREE_D_COVER_IMAGE_WIDTH,
+  THREE_D_COVER_IMAGE_ASPECT_RATIO,
+} from '@friends-library/types';
 
 export async function start(): Promise<number> {
   const port = 51515;
@@ -20,7 +24,7 @@ export function stop(port: number): void {
 }
 
 export interface ScreenshotTaker {
-  (id: string, type: 'ebook' | 'audio'): Promise<Buffer>;
+  (id: string, type: 'ebook' | 'audio' | `threeD`): Promise<Buffer>;
 }
 
 interface BrowserCloser {
@@ -30,16 +34,26 @@ interface BrowserCloser {
 export async function screenshot(
   port: number,
 ): Promise<[ScreenshotTaker, BrowserCloser]> {
-  const { CHROMIUM_PATH } = env.require(`CHROMIUM_PATH`);
-  const browser = await puppeteer.launch({ executablePath: CHROMIUM_PATH });
+  const EXEC_PATH = env.requireVar(`PUPPETEER_EXEC_PATH`);
+  const browser = await puppeteer.launch({
+    // @ts-ignore
+    product: `firefox`,
+    executablePath: EXEC_PATH,
+  });
   const page = await browser.newPage();
-  await page.setViewport({ width: 1600, height: 2400 });
 
   return [
-    async (id: string, type: 'ebook' | 'audio'): Promise<Buffer> => {
-      const clip = type === `ebook` ? false : getAudioImageClip();
+    async (id: string, type: 'ebook' | 'audio' | 'threeD'): Promise<Buffer> => {
+      const widthThreeD = LARGEST_THREE_D_COVER_IMAGE_WIDTH;
+      const heightThreeD = widthThreeD / THREE_D_COVER_IMAGE_ASPECT_RATIO;
+      await page.setViewport(
+        type === `threeD`
+          ? { width: widthThreeD, height: Math.floor(heightThreeD) }
+          : { width: 1600, height: 2400 },
+      );
+      const clip = type === `audio` ? { clip: getAudioImageClip() } : {};
       await page.goto(`http://localhost:${port}?capture=${type}&id=${id}`);
-      return page.screenshot({ encoding: `binary`, ...(clip ? { clip } : {}) });
+      return page.screenshot(clip);
     },
     async () => await browser.close(),
   ];
@@ -64,7 +78,7 @@ function getAudioImageClip(): {
   const FULL_WIDTH = 1600;
 
   return {
-    x: 0 + ZOOM / 2,
+    x: ZOOM / 2,
     y: TOP_WHITE_BAR_HEIGHT + Y_PADDING + ZOOM / 2,
     width: FULL_WIDTH - ZOOM,
     height: FULL_WIDTH - ZOOM,

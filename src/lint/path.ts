@@ -2,9 +2,7 @@ import { Asciidoc, FilePath, EditionType, Lang } from '@friends-library/types';
 import { sync as glob } from 'glob';
 import fs from 'fs';
 
-export function filesFromPath(
-  path: FilePath,
-): {
+export function filesFromPath(path: FilePath): {
   path: FilePath;
   adoc: Asciidoc;
 }[] {
