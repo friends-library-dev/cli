@@ -6,6 +6,8 @@
     "resolveJsonModule": true,
     "module": "CommonJS",
     "target": "ES2019",
-    "strict": true
+    "strict": true,
+    "noUncheckedIndexedAccess": false,
+    "noImplicitOverride": true
   }
 }

@@ -337,7 +337,10 @@ async function storeFilesizeMeta(audio: Audio, fsData: AudioFsData): Promise<voi
   const cached = cache.get(fsData);
   const hqCache = ensureCache(cached.HQ);
   const lqCache = ensureCache(cached.LQ);
-  const combined = Object.values(hqCache).concat(Object.values(lqCache));
+  const combined: (string | number | undefined)[] = Object.values(hqCache).concat(
+    Object.values(lqCache),
+  );
+
   if (combined.length !== 8 || combined.includes(undefined)) {
     logError(`Unexpected missing cache for store filesizes\n`);
     process.exit(1);
