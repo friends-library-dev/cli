@@ -29,9 +29,9 @@ export function create(audio: Audio, src: AudioFsData, quality: AudioQuality): v
 
   src.parts.forEach((part, idx) => {
     chapterFileLines.push(`${secsToStr(durationAccum)} ${audio.parts[idx].title}`);
-    exec.exit(`cp ${part.srcPath} "${workDir}"`);
+    exec.exit(`cp ${part.srcLocalPath} "${workDir}"`);
     if (isMultipart && idx < src.parts.length - 1) {
-      const [, duration] = ffmpeg.getDuration(part.srcPath);
+      const [, duration] = ffmpeg.getDuration(part.srcLocalPath);
       durationAccum += duration;
     }
   });

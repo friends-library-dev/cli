@@ -4,6 +4,7 @@ import { c, log } from 'x-chalk';
 import { Audio } from '@friends-library/friends';
 import { Lang } from '@friends-library/types';
 import * as docMeta from '@friends-library/document-meta';
+import * as cloud from '@friends-library/cloud';
 import { getAudios } from '../../audio';
 import * as ffmpeg from '../../ffmpeg';
 import * as posterApp from './poster-server';
@@ -101,17 +102,29 @@ async function makeVideo(
   const suffix = numVols === 1 ? `` : `-v${volNum}`;
   const audioFilename = `video-src${suffix}.wav`;
   const durations = allDurations.slice(startIdx, nextVolIdx ?? Infinity);
+
+  // pull down source .wav files
+  for (let i = 0; i < audioFsData.parts.length; i++) {
+    const part = audioFsData.parts[i];
+    if (part.srcLocalFileExists) {
+      continue;
+    }
+    logAction(`downloading source .wav file for ${c`{cyan pt. ${i + 1}}`}`);
+    const buff = await cloud.downloadFile(part.srcCloudPath);
+    fs.writeFileSync(part.srcLocalPath, buff);
+  }
+
   if (audio.parts.length > 1) {
     logDebug(`joining source wav files for video creation`);
     ffmpeg.joinWavs(
       workDir,
       audioFsData.parts
         .filter((p, idx) => idx >= startIdx && (!nextVolIdx || idx < nextVolIdx))
-        .map((p) => p.srcPath),
+        .map((p) => p.srcLocalPath),
       audioFilename,
     );
   } else {
-    exec.exit(`cp ${audioFsData.parts[0].srcPath} ${workDir}/${audioFilename}`);
+    exec.exit(`cp ${audioFsData.parts[0].srcLocalPath} ${workDir}/${audioFilename}`);
   }
 
   logDebug(`capturing poster images`);
@@ -144,6 +157,9 @@ async function makeVideo(
   const metaFilepath = `${workDir}/desc${suffix}.txt`;
   const meta = metadata(audio, startIdx, nextVolIdx, volNum, numVols, durations);
   fs.writeFileSync(metaFilepath, meta);
+
+  // remove downloaded source .wav files, to not clog local HD
+  audioFsData.parts.forEach((p) => fs.rmSync(p.srcLocalPath));
 }
 
 async function capturePosterImages(

@@ -3,6 +3,7 @@ import fs from 'fs-extra';
 import md5File from 'md5-file';
 import env from '@friends-library/env';
 import { Audio } from '@friends-library/friends';
+import * as cloud from '@friends-library/cloud';
 import { logError } from '../../sub-log';
 import { AudioFsData } from './types';
 import { md5String } from './utils';
@@ -32,18 +33,22 @@ export default async function getSrcFsData(audio: Audio): Promise<AudioFsData> {
     if (audio.parts.length > 1) {
       partBasename += `--pt${idx + 1}`;
     }
-    const srcPath = `${data.abspath}/${partBasename}.wav`;
-    if (!fs.existsSync(srcPath)) {
-      errors.push(`source path not found: ${partBasename}.wav`);
+    const srcLocalPath = `${data.abspath}/${partBasename}.wav`;
+    const srcCloudPath = `${data.relPath}/${partBasename}.wav`;
+    const srcHash = await cloud.md5File(srcCloudPath);
+    if (!srcHash) {
+      errors.push(`source wav not found in cloud: ${srcCloudPath}`);
     } else {
       const part = `pt--` + String(idx + 1).padStart(2, `0`);
-      const srcHash = await md5File(srcPath);
+      const srcHash = await md5File(srcLocalPath);
       const hashedBasename = `${srcHash}--${partBasename}`;
       data.parts.push({
         basename: partBasename,
         hashedBasename,
         cachedDataPath: `${cachedDataDir}/${part}--${srcHash}.json`,
-        srcPath,
+        srcLocalPath,
+        srcCloudPath,
+        srcLocalFileExists: fs.existsSync(srcLocalPath),
         srcHash,
         mp3s: {
           HQ: {

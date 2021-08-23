@@ -21,17 +21,19 @@ export interface AudioFsData {
     HQ: FileFsData;
     LQ: FileFsData;
   };
-  parts: {
+  parts: Array<{
     hashedBasename: string;
     basename: string;
-    srcPath: string;
+    srcCloudPath: string;
+    srcLocalPath: string;
+    srcLocalFileExists: boolean;
     srcHash: string;
     cachedDataPath: string;
     mp3s: {
       HQ: FileFsData;
       LQ: FileFsData;
     };
-  }[];
+  }>;
 }
 
 interface SoundCloudSharedAttrs {

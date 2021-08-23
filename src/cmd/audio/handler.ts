@@ -348,7 +348,7 @@ async function storeFilesizeMeta(audio: Audio, fsData: AudioFsData): Promise<voi
 
   const localAudioMeta = {
     durations: audio.parts.map(
-      (p, idx) => ffmpeg.getDuration(fsData.parts[idx].srcPath)[1],
+      (p, idx) => ffmpeg.getDuration(fsData.parts[idx].srcLocalPath)[1],
     ),
     LQ: {
       mp3ZipSize: lqCache.mp3ZipSize ?? -1,
@@ -457,8 +457,16 @@ async function createMp3(
   quality: AudioQuality,
   destPath: string,
 ): Promise<void> {
-  const srcPath = fsData.parts[partIndex].srcPath;
-  ffmpeg.createMp3(audio, partIndex, srcPath, destPath, quality);
+  const part = fsData.parts[partIndex];
+  if (!part.srcLocalFileExists) {
+    const partDesc = `pt${partIndex + 1} (${quality})`;
+    logAction(`downloading source .wav file for ${c`{cyan ${partDesc}}`}`);
+    const buff = await cloud.downloadFile(part.srcCloudPath);
+    fs.writeFileSync(part.srcLocalPath, buff);
+  }
+  ffmpeg.createMp3(audio, partIndex, part.srcLocalPath, destPath, quality);
+  // don't keep the wav file around locally to fill up local HD
+  fs.rmSync(part.srcLocalPath);
 }
 
 async function ensureLocalMp3(
