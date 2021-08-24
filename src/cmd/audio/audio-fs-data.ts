@@ -1,6 +1,5 @@
 import path from 'path';
 import fs from 'fs-extra';
-import md5File from 'md5-file';
 import env from '@friends-library/env';
 import { Audio } from '@friends-library/friends';
 import * as cloud from '@friends-library/cloud';
@@ -40,7 +39,6 @@ export default async function getSrcFsData(audio: Audio): Promise<AudioFsData> {
       errors.push(`source wav not found in cloud: ${srcCloudPath}`);
     } else {
       const part = `pt--` + String(idx + 1).padStart(2, `0`);
-      const srcHash = await md5File(srcLocalPath);
       const hashedBasename = `${srcHash}--${partBasename}`;
       data.parts.push({
         basename: partBasename,

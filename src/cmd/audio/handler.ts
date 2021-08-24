@@ -462,11 +462,10 @@ async function createMp3(
     const partDesc = `pt${partIndex + 1} (${quality})`;
     logAction(`downloading source .wav file for ${c`{cyan ${partDesc}}`}`);
     const buff = await cloud.downloadFile(part.srcCloudPath);
+    fs.ensureDirSync(dirname(part.srcLocalPath));
     fs.writeFileSync(part.srcLocalPath, buff);
   }
   ffmpeg.createMp3(audio, partIndex, part.srcLocalPath, destPath, quality);
-  // don't keep the wav file around locally to fill up local HD
-  fs.rmSync(part.srcLocalPath);
 }
 
 async function ensureLocalMp3(
@@ -497,7 +496,7 @@ async function ensureLocalMp3(
   }
 
   logAction(`creating missing mp3 for ${c`{cyan ${partDesc}}`}`);
-  !argv.dryRun && createMp3(audio, fsData, partIndex, quality, mp3Path);
+  !argv.dryRun && (await createMp3(audio, fsData, partIndex, quality, mp3Path));
 }
 
 async function cleanCacheFiles(fsData: AudioFsData): Promise<void> {
