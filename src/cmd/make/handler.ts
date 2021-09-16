@@ -74,7 +74,7 @@ export default async function handler(argv: Arguments<MakeOptions>): Promise<voi
       if (err instanceof ParserError) {
         console.log(err.codeFrame);
       } else {
-        red(err.message);
+        red(err instanceof Error ? err.message : err);
       }
       process.exit(1);
     }

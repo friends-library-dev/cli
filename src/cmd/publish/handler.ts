@@ -77,8 +77,8 @@ export default async function publish(argv: PublishOptions): Promise<void> {
         console.log(err.codeFrame);
         errors.push(`${dpc.path} ${err.codeFrame}`);
       } else {
-        red(err.message);
-        errors.push(`${dpc.path} ${err.message}`);
+        red(err);
+        errors.push(`${dpc.path} ${err}`);
       }
     }
 

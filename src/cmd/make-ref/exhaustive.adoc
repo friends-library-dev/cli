@@ -551,6 +551,38 @@ __Landlord.__--But John, where were you that
 you we not at your quarterly meeting at York the other day,
 I saw most of your staunch Friends there, but you I missed?
 
+=== 4. Discourse within blockquote
+
+[quote]
+____
+Lorem ipsum dolor sit amet, _consectetur adipisicing elit,_ sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+[.discourse-part]
+Question: What is the state and condition of all men by nature,
+as they are begotten of the seed of the evil-doer,
+and come out of the loins of the first Adam?
+
+[.discourse-part]
+Answer: A state of sin and darkness; a state of death and misery;
+a state of enmity against God; a state accursed from God.
+
+Lorem ipsum dolor sit amet, _consectetur adipisicing elit,_ sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+
+Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum.
+____
+
 == Poetry
 
 === 1. Single Stanza
