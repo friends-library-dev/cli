@@ -20,7 +20,9 @@ export default class SoundCloudClient {
 
   public async getTrack(trackId: number): Promise<null | Record<string, any>> {
     if (!this.token) await this.getToken();
-    const res = await fetch(this.endpoint(`tracks/${trackId}?oauth_token=${this.token}`));
+    const res = await fetch(this.endpoint(`tracks/${trackId}`), {
+      headers: { Authorization: `OAuth ${this.token}` },
+    });
     if (res.status === 404) {
       return null;
     }
@@ -32,9 +34,9 @@ export default class SoundCloudClient {
 
   public async getPlaylist(playlistId: number): Promise<null | Record<string, any>> {
     if (!this.token) await this.getToken();
-    const res = await fetch(
-      this.endpoint(`playlists/${playlistId}?oauth_token=${this.token}`),
-    );
+    const res = await fetch(this.endpoint(`playlists/${playlistId}`), {
+      headers: { Authorization: `OAuth ${this.token}` },
+    });
     if (res.status === 404) {
       return null;
     }
@@ -62,12 +64,12 @@ export default class SoundCloudClient {
     if (!this.token) await this.getToken();
 
     const fd = new FormData();
-    fd.append(`oauth_token`, this.token);
     fd.append(`track[artwork_data]`, fs.createReadStream(imagePath));
 
     const res = await fetch(this.endpoint(`tracks/${trackId}`), {
       method: `put`,
       body: fd,
+      headers: { Authorization: `OAuth ${this.token}` },
     });
 
     if (res.status >= 300) {
@@ -83,12 +85,12 @@ export default class SoundCloudClient {
     if (!this.token) await this.getToken();
 
     const fd = new FormData();
-    fd.append(`oauth_token`, this.token);
     fd.append(`playlist[artwork_data]`, fs.createReadStream(imagePath));
 
     const res = await fetch(this.endpoint(`playlists/${playlistId}`), {
       method: `put`,
       body: fd,
+      headers: { Authorization: `OAuth ${this.token}` },
     });
 
     if (res.status >= 300) {
@@ -136,12 +138,12 @@ export default class SoundCloudClient {
     if (!this.token) await this.getToken();
 
     const fd = new FormData();
-    fd.append(`oauth_token`, this.token);
     fd.append(`track[asset_data]`, fs.createReadStream(audioPath));
 
     const res = await fetch(this.endpoint(`tracks/${trackId}`), {
       method: `put`,
       body: fd,
+      headers: { Authorization: `OAuth ${this.token}` },
     });
 
     if (res.status >= 300) {
@@ -161,7 +163,6 @@ export default class SoundCloudClient {
     if (!this.token) await this.getToken();
 
     const fd = new FormData();
-    fd.append(`oauth_token`, this.token);
     fd.append(`track[title]`, attrs.title);
     fd.append(`track[asset_data]`, fs.createReadStream(audioPath));
     fd.append(`track[artwork_data]`, fs.createReadStream(imagePath));
@@ -181,6 +182,7 @@ export default class SoundCloudClient {
     const res = await fetch(this.endpoint(`tracks`), {
       method: `post`,
       body: fd,
+      headers: { Authorization: `OAuth ${this.token}` },
     });
 
     if (res.status >= 300) {
@@ -199,15 +201,12 @@ export default class SoundCloudClient {
   ): Promise<Response> {
     if (!this.token) await this.getToken();
 
-    const authQuery = querystring.stringify({
-      oauth_token: this.token,
-      client_id: this.config.clientId,
-      client_secret: this.config.clientSecret,
-    });
-
-    return fetch(this.endpoint(`${path}?${authQuery}`), {
+    return fetch(this.endpoint(path), {
       method,
-      headers: { 'Content-Type': `application/json` },
+      headers: {
+        'Content-Type': `application/json`,
+        Authorization: `OAuth ${this.token}`,
+      },
       body: JSON.stringify(body),
     });
   }
@@ -216,14 +215,25 @@ export default class SoundCloudClient {
     const cachedTokenPath = `${__dirname}/.soundcloud-token`;
     if (fs.existsSync(cachedTokenPath)) {
       this.token = fs.readFileSync(cachedTokenPath).toString().trim();
+      console.log(this.token);
       return;
     }
 
+    // as of september 2021, SC seems to be working on their API again,
+    // see https://developers.soundcloud.com/blog/security-updates-api
+    // and https://developers.soundcloud.com/docs/api/explorer/open-api
+    // I was able to get a new token using the changes below, but that
+    // new token kept giving me 401/Unauthorized errors. so I kept using
+    // my old `non-expiring` token, and with putting the token into headers
+    // instead of query string, i was able to do all that i needed
+    // but, it also seems that I can no longer get a non-expiring token, so
+    // i saved the value in buttercup. probably at some point that token
+    // will stop working, and i'll have to actually figure out new authentication
     const res = await this.postForm(`oauth2/token`, {
-      grant_type: `password`,
-      scope: `non-expiring`,
-      username: this.config.username,
-      password: this.config.password,
+      grant_type: `client_credentials`, // was `password`
+      // scope: `non-expiring`,          // old
+      // username: this.config.username, // old
+      // password: this.config.password, // old
       client_id: this.config.clientId,
       client_secret: this.config.clientSecret,
     });
