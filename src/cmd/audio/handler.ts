@@ -168,7 +168,7 @@ async function syncM4bs(audio: Audio, fsData: AudioFsData): Promise<void> {
       logAction(`storing cache data for m4b ${c`{cyan (${quality})}`}`);
       !argv.dryRun && (await cache.setM4bQuality(fsData, quality));
     } else if (!hasCache) {
-      !argv.dryRun && ensureLocalM4b(audio, fsData, quality);
+      !argv.dryRun && (await ensureLocalM4b(audio, fsData, quality));
       !argv.dryRun && (await cache.setM4bQuality(fsData, quality));
     } else {
       logDebug(`found valid cached fs data for m4b (${quality})`);
@@ -184,7 +184,7 @@ async function syncM4bs(audio: Audio, fsData: AudioFsData): Promise<void> {
     const cloudM4bHash = await cloud.md5File(cloudFilepath);
     if (localM4bHash !== cloudM4bHash) {
       logAction(`uploading new m4b ${c`{cyan (${quality})}`} to cloud storage`);
-      !argv.dryRun && ensureLocalM4b(audio, fsData, quality);
+      !argv.dryRun && (await ensureLocalM4b(audio, fsData, quality));
       if (!argv.skipLargeUploads) {
         !argv.dryRun && (await cloud.uploadFile(localM4bPath, cloudFilepath));
       } else {
@@ -383,13 +383,17 @@ async function storeFilesizeMeta(audio: Audio, fsData: AudioFsData): Promise<voi
   await docMeta.save(meta);
 }
 
-function ensureLocalM4b(audio: Audio, fsData: AudioFsData, quality: AudioQuality): void {
+async function ensureLocalM4b(
+  audio: Audio,
+  fsData: AudioFsData,
+  quality: AudioQuality,
+): Promise<void> {
   const localPath = fsData.m4bs[quality].localPath;
   if (fs.existsSync(localPath)) {
     return;
   }
   logAction(`creating m4b ${c`{cyan (${quality})}`}`);
-  !argv.dryRun && m4bTool.create(audio, fsData, quality);
+  !argv.dryRun && (await m4bTool.create(audio, fsData, quality));
 }
 
 async function ensureLocalMp3Zip(

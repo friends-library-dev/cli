@@ -215,7 +215,6 @@ export default class SoundCloudClient {
     const cachedTokenPath = `${__dirname}/.soundcloud-token`;
     if (fs.existsSync(cachedTokenPath)) {
       this.token = fs.readFileSync(cachedTokenPath).toString().trim();
-      console.log(this.token);
       return;
     }
 

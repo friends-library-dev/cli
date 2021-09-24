@@ -1,15 +1,21 @@
 import fs from 'fs-extra';
 import os from 'os';
 import exec from 'x-exec';
-import { red } from 'x-chalk';
+import { red, c } from 'x-chalk';
 import { Audio } from '@friends-library/friends';
 import { AudioQuality } from '@friends-library/types';
+import * as cloud from '@friends-library/cloud';
 import { AudioFsData } from './types';
 import { utf8ShortTitle } from '@friends-library/adoc-utils';
 import * as ffmpeg from '../../ffmpeg';
 import { suffixThe } from './tags';
+import { logAction } from '../../sub-log';
 
-export function create(audio: Audio, src: AudioFsData, quality: AudioQuality): void {
+export async function create(
+  audio: Audio,
+  src: AudioFsData,
+  quality: AudioQuality,
+): Promise<void> {
   const edition = audio.edition;
   const document = edition.document;
   const friend = document.friend;
@@ -27,8 +33,14 @@ export function create(audio: Audio, src: AudioFsData, quality: AudioQuality): v
   let durationAccum = 0;
   const chapterFileLines: string[] = [];
 
-  src.parts.forEach((part, idx) => {
+  src.parts.forEach(async (part, idx) => {
     chapterFileLines.push(`${secsToStr(durationAccum)} ${audio.parts[idx].title}`);
+    if (!fs.existsSync(part.srcLocalPath)) {
+      logAction(`downloading source .wav file ${c`{cyan pt. ${idx + 1}}`} for m4b`);
+      const buffer = await cloud.downloadFile(part.srcCloudPath);
+      fs.writeFileSync(part.srcLocalPath, buffer);
+    }
+
     exec.exit(`cp ${part.srcLocalPath} "${workDir}"`);
     if (isMultipart && idx < src.parts.length - 1) {
       const [, duration] = ffmpeg.getDuration(part.srcLocalPath);
@@ -70,7 +82,6 @@ export function create(audio: Audio, src: AudioFsData, quality: AudioQuality): v
   exec.exit(`${dockerArgs.join(` `)} ${m4bToolArgs.join(` `)}`);
   const filename = `${src.hashedBasename}${quality === `LQ` ? `--lq` : ``}.m4b`;
   exec.exit(`mv ${m4bDir}/merged.m4b ${src.derivedPath}/${filename}`);
-  fs.rmdirSync(m4bDir, { recursive: true });
 }
 
 export function ensureExists(): void {
