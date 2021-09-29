@@ -468,6 +468,7 @@ async function createMp3(
     const buff = await cloud.downloadFile(part.srcCloudPath);
     fs.ensureDirSync(dirname(part.srcLocalPath));
     fs.writeFileSync(part.srcLocalPath, buff);
+    part.srcLocalFileExists = true;
   }
   ffmpeg.createMp3(audio, partIndex, part.srcLocalPath, destPath, quality);
 }
