@@ -17,6 +17,7 @@ import * as eachAdoc from './cmd/each-adoc';
 import * as publishRef from './cmd/make-ref';
 import * as docx from './cmd/docx';
 import * as parse from './cmd/parse';
+import * as artifactProductionVersion from './cmd/artifact-production-version';
 
 /* eslint-disable no-unused-expressions */
 yargs
@@ -37,4 +38,5 @@ yargs
   .command(docx)
   .command(eachAdoc)
   .command(parse)
+  .command(artifactProductionVersion)
   .help().argv;
