@@ -1,14 +1,12 @@
 import fs from 'fs-extra';
+import gql from 'x-syntax';
 import sharp from 'sharp';
 import { dirname } from 'path';
-import { execSync } from 'child_process';
-import memoize from 'lodash/memoize';
 import { log, c, red } from 'x-chalk';
 import { isDefined } from 'x-ts-utils';
 import * as docMeta from '@friends-library/document-meta';
 import * as cloud from '@friends-library/cloud';
 import {
-  Sha,
   DocPrecursor,
   ArtifactType,
   SQUARE_COVER_IMAGE_SIZES,
@@ -26,18 +24,39 @@ import { ScreenshotTaker } from './cover-server';
 import validate from './validate';
 import { logDocStart, logDocComplete, logPublishComplete, logPublishStart } from './log';
 import { publishPaperback } from './paperback';
+import * as graphql from '../../graphql';
+import * as git from './git';
 
 interface PublishOptions {
-  build: boolean;
   check: boolean;
   pattern?: string;
   coverServerPort?: number;
+  allowStatus: boolean;
+  force: boolean;
 }
 
 export default async function publish(argv: PublishOptions): Promise<void> {
+  if (!argv.allowStatus && !git.cliStatusClean()) {
+    log(c`\n{red.bold Error: git status not clean} {gray --allow-status to override}\n`);
+    process.exit(1);
+  }
+
   logPublishStart();
-  const meta = await docMeta.fetch();
-  const COVER_PORT = argv.coverServerPort || (await coverServer.start());
+
+  // concurrently wait for startup meta tasks...
+  const [revisionResult, meta, COVER_PORT] = await Promise.all([
+    graphql.send<{ version: { sha: string } }>(REVISION_QUERY),
+    docMeta.fetch(),
+    argv.coverServerPort ? Promise.resolve(argv.coverServerPort) : coverServer.start(),
+  ]);
+
+  if (!revisionResult.success) {
+    log(c`\n{red.bold Error retrieving latest artifact production version:}`);
+    log(c`{gray ${revisionResult.error.body}}`);
+    process.exit(1);
+  }
+
+  const productionRevision = revisionResult.value.version.sha;
   const [makeScreenshot, closeHeadlessBrowser] = await coverServer.screenshot(COVER_PORT);
   const dpcs = dpcQuery.getByPattern(argv.pattern);
   const errors: string[] = [];
@@ -49,6 +68,11 @@ export default async function publish(argv: PublishOptions): Promise<void> {
 
     try {
       logDocStart(dpc, progress);
+      if (!argv.force && shouldSkip(dpc, meta, productionRevision)) {
+        log(c`   {gray re-publish not needed, skipping}`);
+        continue;
+      }
+
       hydrate.all([dpc]);
       if (dpc.edition?.isDraft) {
         continue;
@@ -62,7 +86,7 @@ export default async function publish(argv: PublishOptions): Promise<void> {
       artifacts.deleteNamespaceDir(namespace);
 
       await handleAppEbook(dpc, opts, uploads, i);
-      await handlePaperbackAndCover(dpc, opts, uploads, meta);
+      await handlePaperbackAndCover(dpc, opts, uploads, meta, productionRevision);
       await handleWebPdf(dpc, opts, uploads);
       await handleEbooks(dpc, opts, uploads, makeScreenshot);
       await handle3dPaperbackCoverImages(dpc, opts, uploads, makeScreenshot);
@@ -221,6 +245,7 @@ async function handlePaperbackAndCover(
   opts: { namespace: string; srcPath: string },
   uploads: Map<string, string>,
   meta: docMeta.DocumentMeta,
+  productionRevision: string,
 ): Promise<void> {
   log(c`   {gray Starting paperback interior generation...}`);
   const [paperbackMeta, volumePaths] = await publishPaperback(dpc, opts);
@@ -237,9 +262,9 @@ async function handlePaperbackAndCover(
     updated: now,
     adocLength: dpc.asciidocFiles.reduce((acc, file) => acc + file.adoc.length, 0),
     numSections: dpc.asciidocFiles.length,
-    revision: dpc.revision.sha,
-    productionRevision: getProductionRevision(),
     paperback: paperbackMeta,
+    revision: git.dpcDocumentCurrentSha(dpc),
+    productionRevision,
   });
 
   const coverManifests = await manifest.paperbackCover(dpc, {
@@ -294,12 +319,38 @@ function getFileId(dpc: DocPrecursor): string {
   ].join(`--`);
 }
 
-const getProductionRevision: () => Sha = memoize(() => {
-  const cmd = `git log --max-count=1 --pretty="%h" -- .`;
-  return execSync(cmd, { cwd: process.cwd() }).toString().trim();
-});
-
 function edition(dpc: FsDocPrecursor): Edition {
   if (!dpc.edition) throw new Error(`Unexpected lack of Edition on hydrated dpc`);
   return dpc.edition;
+}
+
+const REVISION_QUERY = gql`
+  query GetLatestArtifactProductionVersion {
+    version: getLatestArtifactProductionVersion {
+      sha: version
+    }
+  }
+`;
+
+function shouldSkip(
+  dpc: FsDocPrecursor,
+  meta: docMeta.DocumentMeta,
+  prodVersion: string,
+): boolean {
+  const edMeta = meta.get(dpc.path);
+  if (!edMeta) {
+    // if we have no edition meta, it's a first-time publish
+    return false;
+  }
+
+  if (prodVersion !== edMeta.productionRevision) {
+    return false;
+  }
+
+  const docSha = git.dpcDocumentCurrentSha(dpc);
+  if (docSha !== edMeta.revision) {
+    return false;
+  }
+
+  return true;
 }

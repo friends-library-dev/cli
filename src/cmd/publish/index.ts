@@ -13,17 +13,23 @@ export const builder: CommandBuilder = function (yargs) {
       default: false,
       demand: false,
     })
-    .option(`build`, {
-      alias: `b`,
+    .option(`force`, {
+      alias: `f`,
       type: `boolean`,
-      description: `trigger website re-builds on complete`,
+      description: `publish even if doc doesn't need re-publishing`,
+      default: false,
+      demand: false,
+    })
+    .option(`allow-status`, {
+      type: `boolean`,
+      description: `allow publishing when CLI has non-clean git status`,
       default: false,
       demand: false,
     })
     .option(`pattern`, {
       alias: `p`,
       type: `string`,
-      description: `pattern to restrict updated assets`,
+      description: `pattern to restrict published assets`,
       demand: false,
     })
     .option(`cover-server-port`, {
