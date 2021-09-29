@@ -6,6 +6,7 @@ import { log, c, red } from 'x-chalk';
 import { isDefined } from 'x-ts-utils';
 import * as docMeta from '@friends-library/document-meta';
 import * as cloud from '@friends-library/cloud';
+import slack from '@friends-library/slack';
 import {
   DocPrecursor,
   ArtifactType,
@@ -33,6 +34,7 @@ interface PublishOptions {
   coverServerPort?: number;
   allowStatus: boolean;
   force: boolean;
+  slack: boolean;
 }
 
 export default async function publish(argv: PublishOptions): Promise<void> {
@@ -60,6 +62,7 @@ export default async function publish(argv: PublishOptions): Promise<void> {
   const [makeScreenshot, closeHeadlessBrowser] = await coverServer.screenshot(COVER_PORT);
   const dpcs = dpcQuery.getByPattern(argv.pattern);
   const errors: string[] = [];
+  const successes: string[] = [];
 
   for (let i = 0; i < dpcs.length; i++) {
     const dpc = dpcs[i];
@@ -96,6 +99,7 @@ export default async function publish(argv: PublishOptions): Promise<void> {
       await cloud.uploadFiles(uploads);
       log(c`   {gray Saving edition meta...}`);
       await docMeta.save(meta);
+      successes.push(dpc.path);
     } catch (err) {
       if (err instanceof ParserError) {
         console.log(err.codeFrame);
@@ -112,6 +116,10 @@ export default async function publish(argv: PublishOptions): Promise<void> {
   if (!argv.coverServerPort) coverServer.stop(COVER_PORT);
   await closeHeadlessBrowser();
   logPublishComplete();
+
+  if (argv.slack) {
+    slackNotify(successes, errors);
+  }
 
   if (errors.length) {
     red(`Encountered ${errors.length} errors:\n`);
@@ -353,4 +361,28 @@ function shouldSkip(
   }
 
   return true;
+}
+
+async function slackNotify(successes: string[], errors: string[]): Promise<void> {
+  if (errors.length > 0) {
+    const errorData = { errors: safeSlackJson(errors) };
+    slack.error(`${errors.length} errors publishing documents`, errorData);
+  }
+  if (successes.length > 0) {
+    const published = { published: safeSlackJson(successes) };
+    slack.info(`Successfully published ${successes.length} documents`, published);
+  }
+}
+
+function safeSlackJson(strings: string[]): string[] {
+  const safeJson: string[] = [];
+  for (let i = 0; i < strings.length; i++) {
+    const stringified = JSON.stringify(safeJson);
+    if (stringified.length > 2900) {
+      safeJson.push(`...and ${strings.length - 1 - i} more...`);
+      return safeJson;
+    }
+    safeJson.push(strings[i]);
+  }
+  return safeJson;
 }

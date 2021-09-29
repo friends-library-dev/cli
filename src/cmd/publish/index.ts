@@ -13,6 +13,13 @@ export const builder: CommandBuilder = function (yargs) {
       default: false,
       demand: false,
     })
+    .option(`slack`, {
+      alias: `s`,
+      type: `boolean`,
+      description: `send slack notifications of success/error`,
+      default: false,
+      demand: false,
+    })
     .option(`force`, {
       alias: `f`,
       type: `boolean`,
