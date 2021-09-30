@@ -118,7 +118,7 @@ export default async function publish(argv: PublishOptions): Promise<void> {
   logPublishComplete();
 
   if (argv.slack) {
-    slackNotify(successes, errors);
+    await slackNotify(successes, errors);
   }
 
   if (errors.length) {
@@ -366,11 +366,15 @@ function shouldSkip(
 async function slackNotify(successes: string[], errors: string[]): Promise<void> {
   if (errors.length > 0) {
     const errorData = { errors: safeSlackJson(errors) };
-    slack.error(`${errors.length} errors publishing documents`, errorData);
+    await slack.error(`${errors.length} errors publishing documents`, errorData);
   }
   if (successes.length > 0) {
     const published = { published: safeSlackJson(successes) };
-    slack.info(`Successfully published ${successes.length} documents`, published);
+    await slack.info(
+      `Successfully published ${successes.length} documents`,
+      published,
+      `:books:`,
+    );
   }
 }
 
