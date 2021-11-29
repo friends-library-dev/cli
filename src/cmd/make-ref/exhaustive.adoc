@@ -206,6 +206,44 @@ The flesh lusts against the Spirit, and the Spirit against the flesh;
 and these are contrary one to the other.
 ____
 
+Quote with a _numbered group_ inside:
+
+[quote]
+____
+
+[.numbered-group]
+====
+
+[.numbered]
+1+++.+++ That we sincerely believe and confess that Jesus of Nazareth,
+who was born of the Virgin Mary, is the true Messiah, the very Christ,
+the Son of the living God, to whom all the prophets gave witness.
+And we do highly value his death, sufferings, works, offices, and merits,
+for the redemption and salvation of mankind, together with his laws, doctrines,
+and ministry.
+
+[.numbered]
+2+++.+++ That this very Christ of God, was and is the Lamb of God,
+that takes away the sins of the world, who was slain, was dead, and is alive,
+and lives forevermore, in his divine, eternal glory, dominion, and power,
+with the Father.
+
+[.numbered]
+3+++.+++ That the Holy Scriptures of the Old and New Testament, are of divine authority,
+as being given by inspiration from God.
+
+[.numbered]
+4+++.+++ And that magistracy or civil government, is God`'s ordinance,
+the good ends thereof being for the punishment of evil doers,
+and praise of them that do well.
+
+====
+
+And we know of no other doctrine or principle, preached, maintained,
+or ever received among or by us, since we were a people,
+contrary to these before mentioned.
+____
+
 == Chapter with Synopsis
 
 [.chapter-synopsis]
