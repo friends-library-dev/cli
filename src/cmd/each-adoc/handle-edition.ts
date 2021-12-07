@@ -1,0 +1,1 @@
+const insert = /* sql */ `INSERT INTO "public"."editions"("id", "document_id", "type", "is_draft", "created_at", "updated_at", "deleted_at") VALUES('55dda9a0-b670-4516-a8f0-c85c837aad3a', '53561891-6761-41b8-b5f8-a1ed91e5dde8', 'modernized', FALSE, '2021-12-07T20:33:00.808Z', '2021-12-07T20:33:00.808Z', '2021-12-07T20:33:00.808Z')`;

@@ -2,8 +2,9 @@ import exec from 'x-exec';
 import { Friend } from '@friends-library/friends';
 import { red } from 'x-chalk';
 import { connectAltLanguageDoc, insertDocument } from './handle-document';
+import { DocumentMeta } from '@friends-library/document-meta';
 
-export default function handleFriend(friend: Friend): string[] {
+export default function handleFriend(friend: Friend, meta: DocumentMeta): string[] {
   const dates = friendDates(friend);
 
   const insertFriend = /* sql */ `
@@ -37,7 +38,7 @@ export default function handleFriend(friend: Friend): string[] {
 
   return [
     insertFriend,
-    ...friend.documents.map(insertDocument),
+    ...friend.documents.map((doc) => insertDocument(doc, meta)),
     ...friend.documents.flatMap(connectAltLanguageDoc),
   ];
 }

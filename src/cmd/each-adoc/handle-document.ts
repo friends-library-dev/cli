@@ -1,7 +1,32 @@
+import { DocumentMeta } from '@friends-library/document-meta';
 import { Document } from '@friends-library/friends';
+import { isNotNull } from 'x-ts-utils';
 import { nullable, nullableInt } from './helpers';
 
-export function insertDocument(document: Document): string {
+export function insertDocument(document: Document, meta: DocumentMeta): string {
+  const metas = [
+    meta.get(`${document.path}/original`),
+    meta.get(`${document.path}/updated`),
+    meta.get(`${document.path}/modernized`),
+  ].filter(isNotNull);
+
+  let createdAt = `current_timestamp`;
+  let updatedAt = `current_timestamp`;
+  if (metas.length > 0) {
+    createdAt = metas[0].published;
+    updatedAt = metas[0].updated;
+    metas.forEach((editionMeta) => {
+      if (editionMeta.published < createdAt) {
+        createdAt = editionMeta.published;
+      }
+      if (editionMeta.updated > updatedAt) {
+        updatedAt = editionMeta.updated;
+      }
+    });
+    createdAt = `'${createdAt}'`;
+    updatedAt = `'${updatedAt}'`;
+  }
+
   return /* sql */ `
     INSERT INTO "documents"
     (
@@ -33,9 +58,9 @@ export function insertDocument(document: Document): string {
       '${document.description}',
       '${document.partialDescription}',
       ${nullable(document.featuredDescription)},
-      '2021-12-07T19:57:36.391Z', -- TODO
-      '2021-12-07T19:57:36.391Z',
-      '2021-12-07T19:57:36.391Z'
+      ${createdAt},
+      ${updatedAt},
+      NULL
     );`;
 }
 
