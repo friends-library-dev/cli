@@ -4,6 +4,7 @@ import { query as dpcQuery, hydrate } from '@friends-library/dpc-fs';
 import handleFriend from './handle-friend';
 import * as docMeta from '@friends-library/document-meta';
 import editions from './cached-editions.json';
+import { insertIsbns } from './handle-edition';
 
 export default async function handler({ pattern }: { pattern: string }): Promise<void> {
   // const meta = await docMeta.fetchSingleton();
@@ -16,6 +17,7 @@ export default async function handler({ pattern }: { pattern: string }): Promise
 
   const processedFriends: Array<string> = [];
   let sqlStatements: Array<string> = [
+    /* sql */ `DELETE FROM "isbns";`,
     /* sql */ `DELETE FROM "edition_impressions";`,
     /* sql */ `DELETE FROM "editions";`,
     /* sql */ `DELETE FROM "documents_tags_pivot";`,
@@ -23,6 +25,7 @@ export default async function handler({ pattern }: { pattern: string }): Promise
     /* sql */ `DELETE FROM "friend_quotes";`,
     /* sql */ `DELETE FROM "friend_residences";`,
     /* sql */ `DELETE FROM "friends";`,
+    ...insertIsbns(),
   ];
 
   dpcs.forEach((dpc) => {
