@@ -17,7 +17,10 @@ export default async function handler({ pattern }: { pattern: string }): Promise
   const processedFriends: Array<string> = [];
   let sqlStatements: Array<string> = [
     /* sql */ `DELETE FROM "editions";`,
+    /* sql */ `DELETE FROM "documents_tags_pivot";`,
     /* sql */ `DELETE FROM "documents";`,
+    /* sql */ `DELETE FROM "friend_quotes";`,
+    /* sql */ `DELETE FROM "friend_residences";`,
     /* sql */ `DELETE FROM "friends";`,
   ];
 
@@ -35,5 +38,8 @@ export default async function handler({ pattern }: { pattern: string }): Promise
   const inserts = sqlStatements.filter((st) => st.includes(`INSERT INTO`));
   const updates = sqlStatements.filter((st) => st.includes(`UPDATE "`));
 
-  fs.writeFileSync(`/Users/jared/fl/insert.sql`, [...resets,...inserts, ...updates].join(`\n\n`));
+  fs.writeFileSync(
+    `/Users/jared/fl/insert.sql`,
+    [...resets, ...inserts, ...updates].join(`\n\n`),
+  );
 }
