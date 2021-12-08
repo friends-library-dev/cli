@@ -17,6 +17,8 @@ export default async function handler({ pattern }: { pattern: string }): Promise
 
   const processedFriends: Array<string> = [];
   let sqlStatements: Array<string> = [
+    /* sql */ `DELETE FROM "edition_audio_parts";`,
+    /* sql */ `DELETE FROM "edition_audios";`,
     /* sql */ `DELETE FROM "isbns";`,
     /* sql */ `DELETE FROM "edition_impressions";`,
     /* sql */ `DELETE FROM "editions";`,

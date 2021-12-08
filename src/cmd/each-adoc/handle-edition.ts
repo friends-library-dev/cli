@@ -2,6 +2,7 @@ import { DocumentMeta } from '@friends-library/document-meta';
 import { Edition, isbns } from '@friends-library/friends';
 import uuid from 'uuid/v4';
 import { magenta, red } from 'x-chalk';
+import handleAudio from './handle-audio';
 import { boolean, nullable, nullableJson } from './helpers';
 
 export default function handleEdition(edition: Edition, meta: DocumentMeta): string[] {
@@ -41,7 +42,7 @@ export default function handleEdition(edition: Edition, meta: DocumentMeta): str
       NULL
     );`;
 
-  const statements = [insertEdition];
+  let statements = [insertEdition];
 
   if (editionMeta) {
     const paperback = editionMeta.paperback;
@@ -85,6 +86,10 @@ export default function handleEdition(edition: Edition, meta: DocumentMeta): str
       SET "edition_id" = '${editionId}'
       WHERE "code" = '${edition.isbn}';
     `);
+  }
+
+  if (edition.audio) {
+    statements = [...statements, ...handleAudio(edition.audio, editionId, editionMeta!)];
   }
 
   // let lol = /* sql */ `UPDATE "public"."isbns" SET "edition_id"='09d3faf1-f626-4007-bc81-aaba9a7ce45a', "updated_at"='2021-12-08T17:29:50.939Z' WHERE "id"='002cc280-e9ec-4f3d-8aa6-f7adafe0568d'`;
