@@ -4,6 +4,7 @@ import { red } from 'x-chalk';
 import handleDocument from './handle-document';
 import { DocumentMeta } from '@friends-library/document-meta';
 import uuid from 'uuid/v4';
+import { nullableJson } from './helpers';
 
 export default function handleFriend(friend: Friend, meta: DocumentMeta): string[] {
   const dates = friendDates(friend);
@@ -67,17 +68,13 @@ function friendResidences(friend: Friend): string[] {
           '${friend.id}',
           '${residence.city}',
           '${residence.region}',
-         ${residence.durations ? `'${JSON.stringify(residence.durations[0])}'` : `NULL`},
+          ${nullableJson(residence.durations?.[0])},
           current_timestamp,
           current_timestamp
         );`;
     }) ?? []
   );
 }
-/* 
-INSERT INTO "public"."friend_residences"("id", "friend_id", "city", "region", "duration", "created_at", "updated_at") VALUES('43693acc-13ca-42f8-8aca-a20c2ac4e216', '1da97dc1-d7d9-4bf6-a81c-ea1b638dbc20', 'London', 'England', '{"start":1600,"end":1700}', '2021-12-08T15:46:28.300Z', '2021-12-08T15:46:28.300Z')
-
- */
 
 function friendQuotes(friend: Friend): string[] {
   return (
