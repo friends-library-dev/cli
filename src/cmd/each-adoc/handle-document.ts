@@ -68,9 +68,43 @@ export default function handleDocument(
       ${createdAt},
       ${updatedAt},
       NULL
-    );`;
+    );
+  `;
 
-  return [insert, ...insertDocumentTags(document), ...connectAltLanguageDoc(document)];
+  return [
+    insert,
+    ...insertDocumentTags(document),
+    ...connectAltLanguageDoc(document),
+    ...insertRelatedDocuments(document, createdAt),
+  ];
+}
+
+function insertRelatedDocuments(document: Document, createdAt: string): string[] {
+  if (!document.relatedDocuments) {
+    return [];
+  }
+
+  return document.relatedDocuments.map((related) => {
+    return /* sql */ `
+      -- __DELAY__ dont insert until all docs are inserted
+      INSERT INTO "related_documents"
+      (
+        "id",
+        "parent_document_id",
+        "document_id",
+        "description",
+        "created_at",
+        "updated_at"
+      ) VALUES (
+        '${uuid()}',
+        '${document.id}',
+        '${related.id}',
+        '${related.description}',
+        ${createdAt},
+        ${createdAt}
+      );
+    `;
+  });
 }
 
 function insertDocumentTags(document: Document): string[] {

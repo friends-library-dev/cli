@@ -23,6 +23,7 @@ export default async function handler({ pattern }: { pattern: string }): Promise
     /* sql */ `DELETE FROM "isbns";`,
     /* sql */ `DELETE FROM "edition_impressions";`,
     /* sql */ `DELETE FROM "editions";`,
+    /* sql */ `DELETE FROM "related_documents";`,
     /* sql */ `DELETE FROM "documents_tags_pivot";`,
     /* sql */ `DELETE FROM "documents";`,
     /* sql */ `DELETE FROM "friend_quotes";`,
@@ -44,11 +45,14 @@ export default async function handler({ pattern }: { pattern: string }): Promise
   });
 
   const resets = sqlStatements.filter((st) => st.includes(`DELETE FROM`));
-  const inserts = sqlStatements.filter((st) => st.includes(`INSERT INTO`));
+  const inserts = sqlStatements.filter(
+    (st) => st.includes(`INSERT INTO`) && !st.includes(`__DELAY__`),
+  );
+  const delays = sqlStatements.filter((st) => st.includes(`__DELAY__`));
   const updates = sqlStatements.filter((st) => st.includes(`UPDATE "`));
 
   fs.writeFileSync(
     `/Users/jared/fl/insert.sql`,
-    [...resets, ...inserts, ...updates].join(`\n\n`),
+    [...resets, ...inserts, ...delays, ...updates].join(`\n\n`),
   );
 }
