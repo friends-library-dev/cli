@@ -1,9 +1,10 @@
 import { DocumentMeta } from '@friends-library/document-meta';
 import { Document } from '@friends-library/friends';
 import { isNotNull } from 'x-ts-utils';
+import handleEdition from './handle-edition';
 import { nullable, nullableInt } from './helpers';
 
-export function insertDocument(document: Document, meta: DocumentMeta): string {
+export default function handleDocument(document: Document, meta: DocumentMeta): string[] {
   const metas = [
     meta.get(`${document.path}/original`),
     meta.get(`${document.path}/updated`),
@@ -27,7 +28,7 @@ export function insertDocument(document: Document, meta: DocumentMeta): string {
     updatedAt = `'${updatedAt}'`;
   }
 
-  return /* sql */ `
+  const insert = /* sql */ `
     INSERT INTO "documents"
     (
       "id",
@@ -62,9 +63,15 @@ export function insertDocument(document: Document, meta: DocumentMeta): string {
       ${updatedAt},
       NULL
     );`;
+
+  return [
+    insert,
+    ...connectAltLanguageDoc(document),
+    ...document.editions.flatMap((edition) => handleEdition(edition, meta)),
+  ];
 }
 
-export function connectAltLanguageDoc(document: Document): string[] {
+function connectAltLanguageDoc(document: Document): string[] {
   if (!document.altLanguageId) {
     return [];
   }

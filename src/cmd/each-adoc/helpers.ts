@@ -10,3 +10,7 @@ export function nullableInt(value: number | null | undefined): string {
   }
   return `NULL`;
 }
+
+export function boolean(value: boolean): string {
+  return value ? `TRUE` : `FALSE`;
+}

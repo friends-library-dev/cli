@@ -1,8 +1,9 @@
 import exec from 'x-exec';
 import { Friend } from '@friends-library/friends';
 import { red } from 'x-chalk';
-import { connectAltLanguageDoc, insertDocument } from './handle-document';
+import handleDocument from './handle-document';
 import { DocumentMeta } from '@friends-library/document-meta';
+import uuid from 'uuid/v4';
 
 export default function handleFriend(friend: Friend, meta: DocumentMeta): string[] {
   const dates = friendDates(friend);
@@ -38,9 +39,37 @@ export default function handleFriend(friend: Friend, meta: DocumentMeta): string
 
   return [
     insertFriend,
-    ...friend.documents.map((doc) => insertDocument(doc, meta)),
-    ...friend.documents.flatMap(connectAltLanguageDoc),
+    ...friend.documents.flatMap((doc) => handleDocument(doc, meta)),
+    ...friendQuotes(friend),
   ];
+}
+
+function friendQuotes(friend: Friend): string[] {
+  return (
+    friend.quotes?.map((quote, index) => {
+      return /* sql */ `
+        INSERT INTO "friend_quotes"
+        (
+          "id",
+          "friend_id",
+          "source",
+          "text",
+          "order",
+          "context",
+          "created_at",
+          "updated_at"
+        ) VALUES (
+          '${uuid()}'
+          '${friend.id}',
+          '${quote.source}',
+          '${quote.text}',
+          ${index + 1},
+          NULL,
+          current_timestamp,
+          current_timestamp
+        );`;
+    }) ?? []
+  );
 }
 
 function friendDates(friend: Friend): {
