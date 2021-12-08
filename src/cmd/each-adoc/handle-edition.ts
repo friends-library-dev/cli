@@ -1,11 +1,17 @@
 import { DocumentMeta } from '@friends-library/document-meta';
+import { FsDocPrecursor } from '@friends-library/dpc-fs';
 import { Edition, isbns } from '@friends-library/friends';
 import uuid from 'uuid/v4';
 import { magenta, red } from 'x-chalk';
 import handleAudio from './handle-audio';
-import { boolean, nullable, nullableJson } from './helpers';
+import handleChapters from './handle-chapters';
+import { boolean, nullable } from './helpers';
 
-export default function handleEdition(edition: Edition, meta: DocumentMeta): string[] {
+export default function handleEdition(
+  edition: Edition,
+  meta: DocumentMeta,
+  dpc: FsDocPrecursor,
+): string[] {
   const editionMeta = meta.get(edition.path);
   if (!editionMeta) {
     magenta(`missing edition meta for ${edition.path}`);
@@ -90,6 +96,10 @@ export default function handleEdition(edition: Edition, meta: DocumentMeta): str
 
   if (edition.audio) {
     statements = [...statements, ...handleAudio(edition.audio, editionId, editionMeta!)];
+  }
+
+  if (!edition.isDraft && editionMeta) {
+    statements = [...statements, ...handleChapters(editionId, editionMeta.updated, dpc)];
   }
 
   // let lol = /* sql */ `UPDATE "public"."isbns" SET "edition_id"='09d3faf1-f626-4007-bc81-aaba9a7ce45a', "updated_at"='2021-12-08T17:29:50.939Z' WHERE "id"='002cc280-e9ec-4f3d-8aa6-f7adafe0568d'`;

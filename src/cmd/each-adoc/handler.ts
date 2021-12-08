@@ -4,7 +4,7 @@ import { query as dpcQuery, hydrate } from '@friends-library/dpc-fs';
 import handleFriend from './handle-friend';
 import * as docMeta from '@friends-library/document-meta';
 import editions from './cached-editions.json';
-import { insertIsbns } from './handle-edition';
+import handleEdition, { insertIsbns } from './handle-edition';
 
 export default async function handler({ pattern }: { pattern: string }): Promise<void> {
   // const meta = await docMeta.fetchSingleton();
@@ -17,6 +17,7 @@ export default async function handler({ pattern }: { pattern: string }): Promise
 
   const processedFriends: Array<string> = [];
   let sqlStatements: Array<string> = [
+    /* sql */ `DELETE FROM "edition_chapters";`,
     /* sql */ `DELETE FROM "edition_audio_parts";`,
     /* sql */ `DELETE FROM "edition_audios";`,
     /* sql */ `DELETE FROM "isbns";`,
@@ -36,8 +37,10 @@ export default async function handler({ pattern }: { pattern: string }): Promise
 
     if (!processedFriends.includes(friend.id)) {
       processedFriends.push(friend.id);
-      sqlStatements = [...sqlStatements, ...handleFriend(friend, meta)];
+      sqlStatements = [...sqlStatements, ...handleFriend(friend, meta, dpc)];
     }
+
+    sqlStatements = [...sqlStatements, ...handleEdition(dpc.edition!, meta, dpc)];
   });
 
   const resets = sqlStatements.filter((st) => st.includes(`DELETE FROM`));

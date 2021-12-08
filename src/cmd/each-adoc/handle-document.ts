@@ -3,10 +3,14 @@ import { Document } from '@friends-library/friends';
 import { red } from 'x-chalk';
 import uuid from 'uuid/v4';
 import { isNotNull } from 'x-ts-utils';
-import handleEdition from './handle-edition';
 import { nullable, nullableInt } from './helpers';
+import { FsDocPrecursor } from '@friends-library/dpc-fs';
 
-export default function handleDocument(document: Document, meta: DocumentMeta): string[] {
+export default function handleDocument(
+  document: Document,
+  meta: DocumentMeta,
+  dpc: FsDocPrecursor,
+): string[] {
   const metas = [
     meta.get(`${document.path}/original`),
     meta.get(`${document.path}/updated`),
@@ -66,12 +70,7 @@ export default function handleDocument(document: Document, meta: DocumentMeta): 
       NULL
     );`;
 
-  return [
-    insert,
-    ...insertDocumentTags(document),
-    ...connectAltLanguageDoc(document),
-    ...document.editions.flatMap((edition) => handleEdition(edition, meta)),
-  ];
+  return [insert, ...insertDocumentTags(document), ...connectAltLanguageDoc(document)];
 }
 
 function insertDocumentTags(document: Document): string[] {

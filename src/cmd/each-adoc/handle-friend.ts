@@ -5,8 +5,13 @@ import handleDocument from './handle-document';
 import { DocumentMeta } from '@friends-library/document-meta';
 import uuid from 'uuid/v4';
 import { nullableJson } from './helpers';
+import { FsDocPrecursor } from '@friends-library/dpc-fs';
 
-export default function handleFriend(friend: Friend, meta: DocumentMeta): string[] {
+export default function handleFriend(
+  friend: Friend,
+  meta: DocumentMeta,
+  dpc: FsDocPrecursor,
+): string[] {
   const dates = friendDates(friend);
 
   const insertFriend = /* sql */ `
@@ -40,7 +45,7 @@ export default function handleFriend(friend: Friend, meta: DocumentMeta): string
 
   return [
     insertFriend,
-    ...friend.documents.flatMap((doc) => handleDocument(doc, meta)),
+    ...friend.documents.flatMap((doc) => handleDocument(doc, meta, dpc)),
     ...friendQuotes(friend),
     ...friendResidences(friend),
   ];
