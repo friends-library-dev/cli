@@ -71,8 +71,8 @@ export default async function handler(argv: Arguments<MakeOptions>): Promise<voi
     try {
       files = files.concat(await makeDpc(dpc, argv, namespace));
     } catch (err) {
-      if (err instanceof ParserError) {
-        console.log(err.codeFrame);
+      if (err instanceof ParserError || `codeFrame` in (err as any)) {
+        console.log((err as any).codeFrame);
       } else {
         red(err instanceof Error ? err.message : err);
       }
