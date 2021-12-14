@@ -31,14 +31,20 @@ describe(`convertHandler()`, () => {
 
     const file = path.resolve(__dirname, `./footnote.xml`);
     const origContents = fs.readFileSync(file).toString();
-    const adoc = file.replace(/\.xml$/, `.adoc`);
-    fs.existsSync(adoc) && fs.unlinkSync(adoc);
+    const adocFile = file.replace(/\.xml$/, `.adoc`);
+    fs.existsSync(adocFile) && fs.unlinkSync(adocFile);
     convertHandler({ file, skipRefs: false });
 
-    expect(fs.existsSync(adoc)).toBe(true);
-    expect(fs.readFileSync(adoc).toString()).toContain(`After empty p.`);
-
-    fs.writeFileSync(file, origContents);
-    fs.unlinkSync(adoc);
+    try {
+      expect(fs.existsSync(adocFile)).toBe(true);
+      const adoc = fs.readFileSync(adocFile, `utf-8`);
+      expect(adoc).toContain(`+++[+++Before+++]+++ empty p.`);
+      expect(adoc).toContain(`After +++[+++empty+++]+++ p.`);
+    } catch (error) {
+      throw error;
+    } finally {
+      fs.writeFileSync(file, origContents);
+      fs.unlinkSync(adocFile);
+    }
   });
 });

@@ -4,7 +4,8 @@
   <para>
     A sentence with a footnote.
     <footnote>
-      <para>Before empty p.</para><para/><para>After empty p.</para>
+      <para>[Before] empty p.</para><para/><para>After [empty] p.</para>
     </footnote>
   </para>
 </article>
+
