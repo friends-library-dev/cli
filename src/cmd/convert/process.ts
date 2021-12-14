@@ -4,6 +4,7 @@ export function processAsciidoc(adoc: Asciidoc): Asciidoc {
   return adoc
     .replace(/(?<!footnote:)\[/gm, `+++[+++`)
     .replace(/\n\n(1[678][0-9]{2})\. /gm, `\n\n$1+++.+++ `)
+    .replace(/\n\n\*\s+\*\s+\*\s*\n\n/gm, `\n\n[.asterism]\n'''\n\n`)
     .replace(/\n\n----*\n\n/gm, `\n\n[.asterism]\n'''\n\n`)
     .replace(/\n\n        /gm, `\n\n`) // eslint-disable-line no-irregular-whitespace
     .replace(/(____*)/g, `+++$1+++`)
