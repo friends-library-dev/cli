@@ -79,6 +79,14 @@ describe(`processAsciidoc()`, () => {
     expect(processed).toBe(`== C1\n\nFoo bar\n2+++.+++ Foobar\njim jam`);
   });
 
+  it(`escapes periods after double digit at beginning of line`, () => {
+    const adoc = `== C1\n\nFoo bar\n22. Foobar\njim jam`;
+
+    const processed = processAsciidoc(adoc);
+
+    expect(processed).toBe(`== C1\n\nFoo bar\n22+++.+++ Foobar\njim jam`);
+  });
+
   it(`escapes periods after single digit beginning of paragraph (with leading whitespace)`, () => {
     const adoc = `== Ch1\n\nPara.\n\n    1. Babylon is called a city.`;
 
