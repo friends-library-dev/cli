@@ -92,6 +92,12 @@ describe(`processAsciidoc()`, () => {
     expect(processed).toBe(`== Ch1\n\nPara.\n\n1+++.+++ Babylon is called a city.`);
   });
 
+  it(`transforms ellipses at beginning of line into entity`, () => {
+    const adoc = `=== Ch1\n\nPara.\n\n...Babylon is called a city.`;
+    const processed = processAsciidoc(adoc);
+    expect(processed).toBe(`== Ch1\n\nPara.\n\n&hellip;Babylon is called a city.`);
+  });
+
   it(`removes leading para spaces`, () => {
     // eslint-disable-next-line no-irregular-whitespace
     const adoc = `=== Ch1\n\n      Babylon is the spiritual fabric of iniquity`;
