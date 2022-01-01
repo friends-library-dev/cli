@@ -11,6 +11,7 @@ export default function handleEdition(
   edition: Edition,
   meta: DocumentMeta,
   dpc: FsDocPrecursor,
+  idMap: Record<string, string>,
 ): string[] {
   const editionMeta = meta.get(edition.path);
   if (!editionMeta) {
@@ -21,7 +22,12 @@ export default function handleEdition(
     }
   }
 
-  const editionId = uuid();
+  const editionId = idMap[`${dpc.documentId}/${dpc.editionType}`];
+  if (!editionId) {
+    red(`failed to find edition id in map for ${edition.path}`);
+    process.exit(1);
+  }
+
   const insertEdition = /* sql */ `
     INSERT INTO "editions"
     (

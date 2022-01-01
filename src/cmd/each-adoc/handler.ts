@@ -5,6 +5,7 @@ import handleFriend from './handle-friend';
 import * as docMeta from '@friends-library/document-meta';
 import editions from './cached-editions.json';
 import handleEdition, { insertIsbns } from './handle-edition';
+import * as editionIds from './edition-id-map';
 
 export default async function handler({ pattern }: { pattern: string }): Promise<void> {
   // const meta = await docMeta.fetchSingleton();
@@ -14,6 +15,9 @@ export default async function handler({ pattern }: { pattern: string }): Promise
     red(`Pattern: \`${pattern}\` matched 0 docs.`);
     process.exit(1);
   }
+
+  const editionIdMap = editionIds.createMap(dpcs);
+  const swiftDict = editionIds.createSwiftDict(editionIdMap);
 
   const processedFriends: Array<string> = [];
   let sqlStatements: Array<string> = [
@@ -33,7 +37,7 @@ export default async function handler({ pattern }: { pattern: string }): Promise
   ];
 
   dpcs.forEach((dpc) => {
-    hydrate.entities(dpc);
+    // hydrate.entities(dpc); // think can skip now
     const friend = dpc.friend!;
 
     if (!processedFriends.includes(friend.id)) {
@@ -41,7 +45,10 @@ export default async function handler({ pattern }: { pattern: string }): Promise
       sqlStatements = [...sqlStatements, ...handleFriend(friend, meta, dpc)];
     }
 
-    sqlStatements = [...sqlStatements, ...handleEdition(dpc.edition!, meta, dpc)];
+    sqlStatements = [
+      ...sqlStatements,
+      ...handleEdition(dpc.edition!, meta, dpc, editionIdMap),
+    ];
   });
 
   const resets = sqlStatements.filter((st) => st.includes(`DELETE FROM`));
@@ -55,4 +62,6 @@ export default async function handler({ pattern }: { pattern: string }): Promise
     `/Users/jared/fl/insert.sql`,
     [...resets, ...inserts, ...delays, ...updates].join(`\n\n`),
   );
+
+  fs.writeFileSync(`/Users/jared/fl/EditionMigrationMap.swift`, swiftDict);
 }
