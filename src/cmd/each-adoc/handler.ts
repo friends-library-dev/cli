@@ -19,6 +19,9 @@ export default async function handler({ pattern }: { pattern: string }): Promise
   const editionIdMap = editionIds.createMap(dpcs);
   const swiftDict = editionIds.createSwiftDict(editionIdMap);
 
+  // 👋 TODO:need to handle the deleted sewel/modernized
+  // `69c5fc26-76e3-4302-964e-ba46d889003b/modernized`
+
   const processedFriends: Array<string> = [];
   let sqlStatements: Array<string> = [
     /* sql */ `DELETE FROM "edition_chapters";`,
