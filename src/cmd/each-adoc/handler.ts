@@ -31,10 +31,10 @@ export default async function handler({ pattern }: { pattern: string }): Promise
     /* sql */ `DELETE FROM "edition_impressions";`,
     /* sql */ `DELETE FROM "editions";`,
     /* sql */ `DELETE FROM "related_documents";`,
-    /* sql */ `DELETE FROM "documents_tags_pivot";`,
     /* sql */ `DELETE FROM "documents";`,
     /* sql */ `DELETE FROM "friend_quotes";`,
     /* sql */ `DELETE FROM "friend_residences";`,
+    /* sql */ `DELETE FROM "friend_residence_durations";`,
     /* sql */ `DELETE FROM "friends";`,
     ...insertIsbns(),
   ];

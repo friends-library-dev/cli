@@ -56,9 +56,41 @@ export default function handleEdition(
 
   let statements = [insertEdition];
 
+  // handle special deleted sewel history modernized (for download FK relationship)
+  if (
+    edition.document.id === `69c5fc26-76e3-4302-964e-ba46d889003b` &&
+    edition.type === `original`
+  ) {
+    statements.push(/* sql */ `
+      INSERT INTO "editions"
+      (
+        "id",
+        "document_id",
+        "type",
+        "editor",
+        "is_draft",
+        "paperback_splits",
+        "paperback_override_size",
+        "created_at",
+        "updated_at",
+        "deleted_at"
+      ) VALUES (
+        '0a4e9e87-3a4a-4bd3-8361-457f78893983',
+        '${edition.document.id}',
+        'modernized',
+        NULL,
+        ${boolean(edition.isDraft)},
+        ${edition.splits ? `'{ ${edition.splits.join(`, `)} }'` : `NULL`},
+        ${nullable(edition.document.printSize)},
+        '2018-07-24T15:15:44.000Z',
+        '2021-09-30T02:13:58.157Z',
+        '2021-12-02T14:41:07.619Z'
+      );`);
+  }
+
   if (editionMeta) {
     const paperback = editionMeta.paperback;
-    const sizeVariant = `${paperback.size}${paperback.condense ? `--condensed` : ``}`;
+    const sizeVariant = `${paperback.size}${paperback.condense ? `Condensed` : ``}`;
     const insertImpression = /* sql */ `
       INSERT INTO "edition_impressions" 
       (
@@ -107,8 +139,6 @@ export default function handleEdition(
   if (!edition.isDraft && editionMeta) {
     statements = [...statements, ...handleChapters(editionId, editionMeta.updated, dpc)];
   }
-
-  // let lol = /* sql */ `UPDATE "public"."isbns" SET "edition_id"='09d3faf1-f626-4007-bc81-aaba9a7ce45a', "updated_at"='2021-12-08T17:29:50.939Z' WHERE "id"='002cc280-e9ec-4f3d-8aa6-f7adafe0568d'`;
 
   return statements;
 }

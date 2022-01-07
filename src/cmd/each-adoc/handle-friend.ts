@@ -53,30 +53,51 @@ export default function handleFriend(
 
 function friendResidences(friend: Friend): string[] {
   return (
-    friend.residences?.map((residence) => {
+    friend.residences?.flatMap((residence) => {
       if (residence.durations && residence.durations.length > 1) {
         red(`friend ${friend.path} has residence with multiple durations!`);
         process.exit();
       }
-      return /* sql */ `
+      const inserts: string[] = [];
+      const friendResidenceId = uuid();
+      inserts.push(/* sql */ `
         INSERT INTO "friend_residences"
         (
           "id",
           "friend_id",
           "city",
           "region",
-          "duration",
           "created_at",
           "updated_at"
         ) VALUES (
-          '${uuid()}',
+          '${friendResidenceId}',
           '${friend.id}',
           '${residence.city}',
           '${residence.region}',
-          ${nullableJson(residence.durations?.[0])},
           current_timestamp,
           current_timestamp
-        );`;
+        );
+      `);
+
+      (residence.durations ?? []).forEach((duration) => {
+        inserts.push(/* sql */ `
+          INSERT INTO "friend_residence_durations"
+          (
+            "id",
+            "friend_residence_id",
+            "start",
+            "end",
+            "created_at"
+          ) VALUES (
+            '${uuid()}',
+            '${friendResidenceId}',
+            ${duration.start},
+            ${duration.end},
+            current_timestamp
+          );
+        `);
+      });
+      return inserts;
     }) ?? []
   );
 }
