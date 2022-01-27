@@ -40,8 +40,6 @@ describe(`convertHandler()`, () => {
       const adoc = fs.readFileSync(adocFile, `utf-8`);
       expect(adoc).toContain(`+++[+++Before+++]+++ empty p.`);
       expect(adoc).toContain(`After +++[+++empty+++]+++ p.`);
-    } catch (error) {
-      throw error;
     } finally {
       fs.writeFileSync(file, origContents);
       fs.unlinkSync(adocFile);
