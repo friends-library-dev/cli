@@ -8,8 +8,8 @@ import handleEdition, { insertIsbns } from './handle-edition';
 import * as editionIds from './edition-id-map';
 
 export default async function handler({ pattern }: { pattern: string }): Promise<void> {
-  // const meta = await docMeta.fetchSingleton();
-  const meta = new docMeta.DocumentMeta(editions);
+  const meta = await docMeta.fetchSingleton();
+  // const meta = new docMeta.DocumentMeta(editions);
   const dpcs = dpcQuery.getByPattern(pattern === `ALL` ? undefined : pattern);
   if (dpcs.length === 0) {
     red(`Pattern: \`${pattern}\` matched 0 docs.`);
