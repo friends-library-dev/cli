@@ -141,26 +141,43 @@ export function attrsMatch(
       return true;
     }
 
+    const verbose = process.argv.includes(`--verbose`);
     if (key === `trackIds`) {
       const apiTrackIds = fromApi.tracks.map((t: { id: number }) => t.id);
       const trackIdsMatch = JSON.stringify(apiTrackIds) !== JSON.stringify(value);
-      if (trackIdsMatch && process.argv.includes(`--verbose`)) {
+      if (verbose && trackIdsMatch) {
         logDebug(`soundcloud attrs mismatch: track ids to not match`);
       }
       return trackIdsMatch;
     }
 
     if (key === `tags`) {
-      const apiTags = fromApi.tag_list.trim().replace(/"/g, ``);
-      return apiTags !== value.join(` `);
+      const apiTags = fromApi.tag_list
+        .trim()
+        .replace(/"/g, ``)
+        .replace(/\s+/g, ` `)
+        .split(` `)
+        .sort()
+        .join(` `);
+      const newTags = value.sort().join(` `);
+      const tagMismatch = apiTags !== newTags;
+      if (verbose && tagMismatch) {
+        logDebug(`soundcloud attrs mismatch [tags]: new=${newTags}, api=${apiTags}`);
+      }
+      return tagMismatch;
     }
 
     if (key === `permalink`) {
-      return value !== permalinkFromUrl(fromApi.permalink_url);
+      const apiPerm = permalinkFromUrl(fromApi.permalink_url);
+      const permalinkMismatch = value !== apiPerm;
+      if (verbose && permalinkMismatch) {
+        logDebug(`soundcloud attrs mismatch [permalink]: new=${value}, api=${apiPerm}`);
+      }
+      return permalinkMismatch;
     }
 
     const attrMismatch = fromApi[key] !== value;
-    if (attrMismatch && process.argv.includes(`--verbose`) && key !== `track_type`) {
+    if (verbose && attrMismatch && key !== `track_type`) {
       logDebug(`soundcloud attrs mismatch: ${key} != ${value}, api=${fromApi[key]}`);
     }
 
@@ -181,7 +198,7 @@ function soundcloudTags(
   setLocale(lang);
   return [
     ...documentTags.map((tag) =>
-      translate(tag.replace(`spiritualLife`, `spiritual life`)),
+      translate(tag.replace(`spiritualLife`, `spiritual-life`)),
     ),
     lang === `en` ? `quakers` : `cuáqueros`,
     lang === `en` ? `early-quakers` : `primeros-cuáqueros`,

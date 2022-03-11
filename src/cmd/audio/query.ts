@@ -8,6 +8,7 @@ export async function getAudios(
   limit?: number,
 ): Promise<Audio[]> {
   const audios = await api.getAudios();
+  audios.sort((a, b) => (a.edition.path < b.edition.path ? -1 : 1));
   for (const audio of audios) {
     audio.parts = audio.parts.sort((a, b) => (a.order < b.order ? -1 : 1));
   }
